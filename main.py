@@ -12,7 +12,7 @@ msgCenter = engineobject.MsgServer()
 class FaceDetectGraph():
     def __init__(self, graphConfigFile):
         print("Start face detect App")
-        engineConfigList = configparser.parse_graph_config("graphConfigFile")
+        engineConfigList = configparser.parse_graph_config(graphConfigFile)
         self.threadList = []
         for engineCfg in engineConfigList:
             if engineCfg[0].engine_name == "Mind_camera_datasets":

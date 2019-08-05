@@ -5,7 +5,6 @@ __all__ = ['CameraImageFormat', 'CameraStatus', 'CameraCapMode', 'CameraProperti
            'Dvpp', 
            'IMAGEFORMAT', 'ImageData', 'ResolutionRatio'
            'HiAiObject']
-import .hiai import *
 import .camera import *
 import .dvpp import *
 import .config import *
