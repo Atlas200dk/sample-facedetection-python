@@ -1,7 +1,6 @@
 #! /usr/bin/env python
 # coding=utf-8
 
-import hiai_media.hiai as hiai
 import hiai_media.image as image
 import hiai_media.dvpp as dvpp
 import hiai_media.engineobject as engineobject
