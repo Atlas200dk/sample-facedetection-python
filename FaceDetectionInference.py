@@ -7,22 +7,22 @@ import hiai_media.dvpp as dvpp
 import hiai_media.engineobject as engineobject
 import DataType as datatype
 
-kModelWidth = 300 #face detection model input width
-kModelHeight = 300 #face detection model input height
-kDvppProcSuccess = 0 #call dvpp success
-kDvppToJpegLevel = 100 #level for call DVPP
-#vpc input image offset
+kModelWidth = 300  # face detection model input width
+kModelHeight = 300  # face detection model input height
+kDvppProcSuccess = 0  # call dvpp success
+kDvppToJpegLevel = 100  # level for call DVPP
+# vpc input image offset
 kImagePixelOffsetEven = 1
 kImagePixelOffsetOdd = 2
 
 class FaceDetectionInference(engineobject.EngineObject):
     def __init__(self,  aiConfig):
         self.fd_model_desc = hiai.AIModelDescription()
-        for item in aiConfig._ai_config_item:
-            if item.__name == "model_path":
-                self.fd_model_desc.path(item.__value)
-                break
-        self.aiConfig = aiConfig
+        #for item in aiConfig._ai_config_item:
+        #    if item.__name == "model_path":
+        #        self.fd_model_desc.path(item.__value)
+        #        break
+        #self.aiConfig = aiConfig
         self.subscribMsgList = ["BatchImageParaWithScaleT", ]
         self.dvpp = dvpp.Dvpp()
 

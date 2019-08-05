@@ -50,19 +50,19 @@ class MindCameraDatasets(engineobject.EngineObject):
                       "YUV420SP":  str(camera.CameraImageFormat.CAMERA_IMAGE_YUV420_SP)}
 
         self.config = CameraDatasetsConfig()
-        for item in aiConfig._ai_config_item:
-            if item.__name == "fps":
-                self._config.fps = int(item.__value)
-            elif (item.__name == "image_format"):
-                self._config.image_format = int(self.param[item.__value])
-            elif item.__name == "data_source":
-                self._config.channel_id = int(self.param[item.__value])
-            elif item.__name == "image_size":
-                resolutionStr = item.__value.split('x')
+        for item in aiConfig._aiconfig_item:
+            if item._AIConfigItem__name == "fps":
+                self.config.fps = int(item._AIConfigItem__value)
+            elif (item._AIConfigItem__name == "image_format"):
+                self.config.image_format = str(self.param[item._AIConfigItem__value])
+            elif item._AIConfigItem__name == "data_source":
+                self.config.channel_id = int(self.param[item._AIConfigItem__value])
+            elif item._AIConfigItem__name == "image_size":
+                resolutionStr = item._AIConfigItem__value.split('x')
                 self.config.resolutionWidth = int(resolutionStr[0])
                 self.config.resolutionHeight = int(resolutionStr[1])
             else:
-                print("unused config name: %s", item.__name)
+                print("unused config name:", item._AIConfigItem__name)
 
     def CheckConfig(self):
         ret = 0
@@ -74,7 +74,7 @@ class MindCameraDatasets(engineobject.EngineObject):
 
         return ret
 
-    def Process(self):
+    def Process(self, recv_data = ""):
         print("I am camera process msg")
         print("[CameraDatasets] start process!")
         self.DoCapProcess()
@@ -100,17 +100,17 @@ class MindCameraDatasets(engineobject.EngineObject):
 
         if 0 == self.cap.SetCameraProperty(self._config.channel_id, camera.CameraProperties.CAMERA_PROP_IMAGE_FORMAT,
                                            self._config.image_format):
-            print("[CameraDatasets]Set image fromat:%d failed", self._config.image_format)
+            print("[CameraDatasets]Set image fromat:%d failed", self.config.image_format)
             return CAMERA_SET_PROPERTY_FAILED
 
-        resolution = camera.CameraResolution(self._config.resolution_width, self._config.resolution_height)
-        if 0 == self.cap.SetCameraProperty(self._config.channel_id,
+        resolution = camera.CameraResolution(self.config.resolution_width, self.config.resolution_height)
+        if 0 == self.cap.SetCameraProperty(self.config.channel_id,
                                            camera.CameraProperties.CAMERA_PROP_RESOLUTION, resolution):
             print("[CameraDatasets]Set resolution{width:%d, height:%d} failed",
-                  self._config.resolution_width, self._config.resolution_height)
+                  self._config.resolution_width, self.config.resolution_height)
             return CAMERA_SET_PROPERTY_FAILED
 
-        if 0 == self.cap.SetCameraProperty(self._config.channel_id, camera.CameraProperties.CAMERA_PROP_CAP_MODE,
+        if 0 == self.cap.SetCameraProperty(self.config.channel_id, camera.CameraProperties.CAMERA_PROP_CAP_MODE,
                                            camera.CameraCapMode.CAMERA_CAP_ACTIVE):
             print("[CameraDatasets]Set cap mode:%d failed", camera.CameraCapMode.CAMERA_CAP_ACTIVE)
             return CAMERA_SET_PROPERTY_FAILED
@@ -146,7 +146,7 @@ class MindCameraDatasets(engineobject.EngineObject):
 
     def DoCapProcess(self):
         if CAMERA_SET_PROPERTY_FAILED == self.PreCapProcess():
-            self.cap.CloseCamera(self._config.channel_id)
+            self.cap.CloseCamera(self.config.channel_id)
             print("[CameraDatasets]Pre process camera failed")
             return False
 
@@ -171,7 +171,7 @@ class MindCameraDatasets(engineobject.EngineObject):
             if ret != 0:
                 print("[CameraDatasets] senddata failed! {frameid:%d, timestamp:%lu}", imagePatch.b_info.frame_ID[0], imagePatch.b_info.timestamp[0]);
                 break
-        self.cap.CloseCamera(self._config.channel_id)
+        self.cap.CloseCamera(self.config.channel_id)
 
     def SetExitFlag(self, flag):
         self.mutex.acquire()

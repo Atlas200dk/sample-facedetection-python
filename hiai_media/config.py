@@ -2,7 +2,7 @@
 # coding=utf-8
 import os
 import copy
-import config
+from hiai import config
 
 
 class MyGraph(object):

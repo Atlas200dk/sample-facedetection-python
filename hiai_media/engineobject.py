@@ -4,7 +4,8 @@ import threading
 from multiprocessing import Queue, Lock
 import queue as dataqueue
 import time
-from abc import ABC, abstractmethod
+from abc import ABCMeta, abstractmethod
+
 
 class MsgQueueUnit():
     def __init__(self, msgTypeNameList):
@@ -51,7 +52,7 @@ class MyThread(threading.Thread):
         print("Starting",self.name,"at:",time.time())
         while True:
             print(self.name, " monitor msg recv")
-            dataType = self.msgQueue.queue.get()
+            dataType = self.msgQueue.msgQueue.get()
             print(self.name, "Recv msg ", dataType)
             msgData = self.msgQueue.dataQueue.get()
             self.engine.Process(msgData)
