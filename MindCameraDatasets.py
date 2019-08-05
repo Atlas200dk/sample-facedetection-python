@@ -50,19 +50,21 @@ class MindCameraDatasets(engineobject.EngineObject):
                       "YUV420SP":  str(camera.CameraImageFormat.CAMERA_IMAGE_YUV420_SP)}
 
         self.config = CameraDatasetsConfig()
-        for item in aiConfig._aiconfig_item:
-            if item._AIConfigItem__name == "fps":
-                self.config.fps = int(item._AIConfigItem__value)
-            elif (item._AIConfigItem__name == "image_format"):
-                self.config.image_format = str(self.param[item._AIConfigItem__value])
-            elif item._AIConfigItem__name == "data_source":
-                self.config.channel_id = int(self.param[item._AIConfigItem__value])
-            elif item._AIConfigItem__name == "image_size":
-                resolutionStr = item._AIConfigItem__value.split('x')
+        itemList = aiConfig.AiConfigItem()
+        for item in itemList:
+            itemName = item.name()
+            if itemName == "fps":
+                self.config.fps = int(item.value())
+            elif (itemName == "image_format"):
+                self.config.image_format = str(self.param[item.value()])
+            elif itemName == "data_source":
+                self.config.channel_id = int(self.param[item.value()])
+            elif itemName == "image_size":
+                resolutionStr = item.value().split('x')
                 self.config.resolutionWidth = int(resolutionStr[0])
                 self.config.resolutionHeight = int(resolutionStr[1])
             else:
-                print("unused config name:", item._AIConfigItem__name)
+                print("unused config name:", itemName)
 
     def CheckConfig(self):
         ret = 0
