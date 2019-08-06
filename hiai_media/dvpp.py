@@ -5,7 +5,9 @@ from enum import Enum
 import ctypes
 from ctypes import *
 import copy
-import hiai_image as image
+
+#import hiai_image as image
+import image
 
 #jpege supports the following format input
 class JPEGFORMAT(Enum):
@@ -87,7 +89,7 @@ class ResolutionC:
 
 class Dvpp:
     def __init__(self):
-        self.dvpp = ctypes.cdll.LoadLibrary("face_detection_dvpp.so")
+        self.dvpp = ctypes.cdll.LoadLibrary("./hiai_media/libhiai_dvpp.so")
 
     def ImageParamDataCopy(self, destImage, srcImage):
         destImage.format = srcImage.format

@@ -53,8 +53,11 @@ class CameraResolution_C(Structure):
 
 class Camera:
     def __init__(self):
+	print('info:Starting Load libmedia_mini.so')
         self.camera = ctypes.CDLL("/usr/lib64/libmedia_mini.so")
+	print('info:Starting Init MediaLib')
         self.camera.MediaLibInit()
+	print('info:End Init Media Lib')
 
     def QueryCameraStatus(self, cameraId):
         return self.camera.QueryCameraStatus(cameraId)
@@ -68,14 +71,16 @@ class Camera:
         else:
             arg = val
 
-        return  self.camera.SetCameraProperty(cameraId, prop, c_void_p(arg))
+        return  self.camera.SetCameraProperty(cameraId, prop.value, c_void_p(id(arg)))
 
     def ReadFrameFromCamera(self, cameralId, dataBuf, size):
-        pdata = c_void_p(dataBuf)
-        imgSize = size
-        psize =  pointer(imgSize)
-        ret = self.camera.ReadFrameFromCamera(cameralId, pdata, psize)
-        return ret, imgSize
+        #pdata = c_byte__p(dataBuf)
+        #imgSize = size
+        #psize =  pointer(imgSize)
+        ret = self.camera.ReadFrameFromCamera(cameralId,dataBuf, size)
+	print("Camer Data Received:",dataBuf)
+	print("Data Lengh",size)
+        return ret, size
 
     def CloseCamera(self, cameralId):
         return self.camera.CloseCamera(cameralId)
