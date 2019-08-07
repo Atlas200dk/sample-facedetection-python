@@ -38,10 +38,10 @@ class MindCameraDatasets(engineobject.EngineObject):
         self.mutex = Lock()
         self.subscribMsgList = ['start', ]
         self.SetExitFlag(CAMERADATASETS_INIT)
-	print('info:Starting Parse Config')
+        print('info:Starting Parse Config')
         self.ParseConfig(aiConfig)
         self.param = None
-	print('info:Starting Init Camera')
+        print('info:Starting Init Camera')
         self.cap = camera.Camera()
         if self.CheckConfig():
             return
@@ -61,17 +61,19 @@ class MindCameraDatasets(engineobject.EngineObject):
             elif item._AIConfigItem__name == "data_source":
                 self.config.channel_id = self.param[item._AIConfigItem__value]
             elif item._AIConfigItem__name == "image_size":
+                print("res val", item._AIConfigItem__value)
                 resolutionStr = item._AIConfigItem__value.split('x')
-                self.config.resolutionWidth = int(resolutionStr[0])
-                self.config.resolutionHeight = int(resolutionStr[1])
+                print("resolutionStr ", resolutionStr, "resolutionStr[0] ", resolutionStr[0], "resolutionStr[1] ", resolutionStr[1])
+                self.config.resolution_width = int(resolutionStr[0])
+                self.config.resolution_height = int(resolutionStr[1])
             else:
-                print("unused config name:", itemName)
+                print("unused config name:", item._AIConfigItem__name)
 
     def CheckConfig(self):
         ret = 0
         if (self.config.image_format == PARSEPARAM_FAIL
                 or self.config.channel_id == PARSEPARAM_FAIL
-                or self.config.resolutionWidth == 0 or self.config.resolutionHeight == 0):
+                or self.config.resolution_width == 0 or self.config.resolution_height == 0):
             print("config data invalid: ", self.config)
             ret = -1
 
@@ -86,38 +88,43 @@ class MindCameraDatasets(engineobject.EngineObject):
 
     def PreCapProcess(self):
         status = self.cap.QueryCameraStatus(self.config.channel_id)
-	print('info:Camera Id %d status %d'%(self.config.channel_id,status))
+        print('info:Camera Id %d status %d'%(self.config.channel_id,status))
         if status != camera.CameraStatus.CAMERA_STATUS_CLOSED.value:
             print("[CameraDatasets]Camera stuts error: ", status)
             return CAMERA_NOT_CLOSED
-	print("info:Starting Open Camera")
+
+        print("info:Starting Open Camera")
         if 0 == self.cap.OpenCamera(self.config.channel_id):
             print("[CameraDatasets]Open camera %d faild", self.config.channel_id)
             return CAMERA_OPEN_FAILED
-	print("info:Starting Set CameraProperty FPS")
+
+        print("info:Starting Set CameraProperty FPS")
         if 0 == self.cap.SetCameraProperty(self.config.channel_id,
                                            camera.CameraProperties.CAMERA_PROP_FPS, self.config.fps):
             print("[CameraDatasets]Set fps:%d failed", self.config.fps)
             return CAMERA_SET_PROPERTY_FAILED
-	print("info:Starting Set CameraProperty IMAGE_FORMAT")
+
+        print("info:Starting Set CameraProperty IMAGE_FORMAT")
         if 0 == self.cap.SetCameraProperty(self.config.channel_id, camera.CameraProperties.CAMERA_PROP_IMAGE_FORMAT,
                                            self.config.image_format):
             print("[CameraDatasets]Set image fromat:%d failed", self.config.image_format)
             return CAMERA_SET_PROPERTY_FAILED
 
         resolution = camera.CameraResolution(self.config.resolution_width, self.config.resolution_height)
-	print("info:Starting Set CameraProperty RESOLUTION")
+        print("info:Starting Set CameraProperty RESOLUTION")
         if 0 == self.cap.SetCameraProperty(self.config.channel_id,
                                            camera.CameraProperties.CAMERA_PROP_RESOLUTION, resolution):
             print("[CameraDatasets]Set resolution{width:%d, height:%d} failed",
                   self.config.resolution_width, self.config.resolution_height)
             return CAMERA_SET_PROPERTY_FAILED
-	print("info:Starting Set CameraProperty CAP MODE")
+
+        print("info:Starting Set CameraProperty CAP MODE")
         if 0 == self.cap.SetCameraProperty(self.config.channel_id, camera.CameraProperties.CAMERA_PROP_CAP_MODE,
-                                           camera.CameraCapMode.CAMERA_CAP_ACTIVE):
+                                           1):#camera.CameraCapMode.CAMERA_CAP_ACTIVE.value):
             print("[CameraDatasets]Set cap mode:%d failed", camera.CameraCapMode.CAMERA_CAP_ACTIVE)
             return CAMERA_SET_PROPERTY_FAILED
 
+        print("camera preprocess ok!")
         return CAMERA_OK
 
     def CreateBatchImageParaObj(self):
@@ -141,8 +148,9 @@ class MindCameraDatasets(engineobject.EngineObject):
         img_data.img.height = self.config.resolution_height
         # YUV size in memory is width * height * 3 / 2
         img_data.img.size = self.config.resolution_width * self.config.resolution_height * 3 / 2
-        img_data.img.data = (c_byte * img_data.img.size)()
-
+        img_data.img.data = create_string_buffer(sizeof(c_byte) * img_data.img.size)
+        print("sizeof(c_byte)", sizeof(c_byte))
+        print("image buf size ", sizeof(img_data.img.data))
         pobj.v_img.append(img_data)
 
         return pobj
@@ -155,20 +163,24 @@ class MindCameraDatasets(engineobject.EngineObject):
 
         self.SetExitFlag(CAMERADATASETS_RUN)
         i = 0
+        print("start get frame from camera")
         while self.GetExitFlag() == CAMERADATASETS_RUN:
             imagePatch = self.CreateBatchImageParaObj()
             imgData = imagePatch.v_img[0]
             imgSize = imgData.img.size
 
             # do read frame from camera
+            print("start read frame")
             ret, readSize = self.cap.ReadFrameFromCamera(self.config.channel_id, imgData.img.data, imgSize)
             if ret != 1:
                 print("[CameraDatasets]Read frame from camera failed {camera:%d, ret:%d, size:%d, expectsize:%d}",
                       self.config.channel_id, ret, readSize, imgData.img.size)
                 break
+            print("ret ", ret, " readSize ", readSize)
             f = open(str(i) + '.png', 'wb')
             f.write(imgData.img.data)
             f.close()
+            i += 1
 
             ret = self.SendData("BatchImageParaWithScaleT", imagePatch)
             if ret != 0:

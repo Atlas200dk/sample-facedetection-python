@@ -18,8 +18,7 @@ class FaceDetectGraph():
             if engineCfg[0].engine_name == "Mind_camera_datasets":
                 engine = datasetengine.MindCameraDatasets(engineCfg[1])
             elif engineCfg[0].engine_name == "face_detection_inference":
-                # engine = inferenceengine.FaceDetectionInference(engineCfg[0])
-		continue
+                engine = inferenceengine.FaceDetectionInference(engineCfg[1])
             elif engineCfg[0].engine_name == "face_detection_post_process":
                 continue
                 #engine = postengine.FaceDetectPost(engineCfg[1])

@@ -25,7 +25,7 @@ class MsgServer():
         return msgQUnit
 
     def SendMsg(self, msgTypeName, msgData):
-        sendRes = 1
+        print("send msg ", msgTypeName)
         for unit in self.msgQueueList:
             for type in unit.msgTypeList:
                 if type == msgTypeName:
@@ -36,11 +36,11 @@ class MsgServer():
                     unit.dataQueue.put(msgData)
                     self.mutex.release()
 
-                    sendRes = 0
                     print("put end")
-        if sendRes == 1:
-            print("Send msg %s failed", msgTypeName)
-        return sendRes
+                    return 0
+        
+        print("Send msg %s failed", msgTypeName)
+        return 1
 
 class MyThread(threading.Thread):
     def __init__(self, engineObj, msgQueue, name):
@@ -69,7 +69,7 @@ class EngineObject():
         self.sendCenter = sendCenter
 
     def SendData(self, dataTypeName, data):
-        self.sendCenter.SendMsg(dataTypeName, data)
+        return self.sendCenter.SendMsg(dataTypeName, data)
 
     @abstractmethod
     def Process(self, data):

@@ -4,37 +4,6 @@ import os
 import copy
 from hiai import config
 
-class HiAiConfigItem(object):
-    '''
-        AIConfigItem is a member of AIConfig, which is contained
-        by two elements:
-        name: config name
-        value: config value
-    '''
-    def __init__(self, name='', value=''):
-        self.__name = name
-        self.__value = value
-
-    def name(self):
-        return self.__name
-
-    def value(self):
-        return self.__value
-
-class HiAiConfig(object):
-    '''
-        AIConfig is a generate field used in graph_config.proto. It contains
-        repeated AIConfig fields mentioned above.
-    '''
-    def __init__(self, ai_config_item):
-        if (isinstance(ai_config_item, list)
-        or isinstance(ai_config_item, HiAiConfigItem)):
-            self._ai_config_item = ai_config_item
-        else:
-            self._ai_config_item = None
-
-    def AiConfigItems(self):
-        return self._ai_config_item
 
 class MyGraph(object):
     def __init__(self, file_path):
@@ -105,35 +74,35 @@ class MyEngine(object):
     # 获取EngineConfig对象，以engine为单位
     def get_engine_config(self):
         # 1 配置AIConfigItem项，组成list，传给AIConfig类
-        self.__ai_config_item_list.append(HiAiConfigItem("path", self.get_value_by_name("path")))
-        self.__ai_config_item_list.append(HiAiConfigItem("dataType", self.get_value_by_name("dataType")))
-        self.__ai_config_item_list.append(HiAiConfigItem("data_source", self.get_value_by_name("data_source")))
-        self.__ai_config_item_list.append(HiAiConfigItem("fps", self.get_value_by_name("fps")))
-        self.__ai_config_item_list.append(HiAiConfigItem("image_format", self.get_value_by_name("image_format")))
-        self.__ai_config_item_list.append(HiAiConfigItem("image_size", self.get_value_by_name("image_size")))
-        self.__ai_config_item_list.append(HiAiConfigItem("meanOfG", self.get_value_by_name("meanOfG")))
-        self.__ai_config_item_list.append(HiAiConfigItem("meanOfR", self.get_value_by_name("meanOfR")))
-        self.__ai_config_item_list.append(HiAiConfigItem("batch", self.get_value_by_name("batch")))
-        self.__ai_config_item_list.append(HiAiConfigItem("useAll", self.get_value_by_name("useAll")))
-        self.__ai_config_item_list.append(HiAiConfigItem("randomNumber", self.get_value_by_name("randomNumber")))
-        self.__ai_config_item_list.append(HiAiConfigItem("target", self.get_value_by_name("target")))
+        self.__ai_config_item_list.append(config.AIConfigItem("path", self.get_value_by_name("path")))
+        self.__ai_config_item_list.append(config.AIConfigItem("dataType", self.get_value_by_name("dataType")))
+        self.__ai_config_item_list.append(config.AIConfigItem("data_source", self.get_value_by_name("data_source")))
+        self.__ai_config_item_list.append(config.AIConfigItem("fps", self.get_value_by_name("fps")))
+        self.__ai_config_item_list.append(config.AIConfigItem("image_format", self.get_value_by_name("image_format")))
+        self.__ai_config_item_list.append(config.AIConfigItem("image_size", self.get_value_by_name("image_size")))
+        self.__ai_config_item_list.append(config.AIConfigItem("meanOfG", self.get_value_by_name("meanOfG")))
+        self.__ai_config_item_list.append(config.AIConfigItem("meanOfR", self.get_value_by_name("meanOfR")))
+        self.__ai_config_item_list.append(config.AIConfigItem("batch", self.get_value_by_name("batch")))
+        self.__ai_config_item_list.append(config.AIConfigItem("useAll", self.get_value_by_name("useAll")))
+        self.__ai_config_item_list.append(config.AIConfigItem("randomNumber", self.get_value_by_name("randomNumber")))
+        self.__ai_config_item_list.append(config.AIConfigItem("target", self.get_value_by_name("target")))
 
-        self.__ai_config_item_list.append(HiAiConfigItem("model_path", self.get_value_by_name("model_path")))
-        self.__ai_config_item_list.append(HiAiConfigItem("init_config", self.get_value_by_name("init_config")))
-        self.__ai_config_item_list.append(HiAiConfigItem("passcode", self.get_value_by_name("passcode")))
-        self.__ai_config_item_list.append(HiAiConfigItem("dump_list", self.get_value_by_name("dump_list")))
+        self.__ai_config_item_list.append(config.AIConfigItem("model_path", self.get_value_by_name("model_path")))
+        self.__ai_config_item_list.append(config.AIConfigItem("init_config", self.get_value_by_name("init_config")))
+        self.__ai_config_item_list.append(config.AIConfigItem("passcode", self.get_value_by_name("passcode")))
+        self.__ai_config_item_list.append(config.AIConfigItem("dump_list", self.get_value_by_name("dump_list")))
         self.__ai_config_item_list.append(
-            HiAiConfigItem("dvpp_parapath", self.get_value_by_name("dvpp_parapath")))
+            config.AIConfigItem("dvpp_parapath", self.get_value_by_name("dvpp_parapath")))
 
-        self.__ai_config_item_list.append(HiAiConfigItem("output_name", self.get_value_by_name("output_name")))
-        self.__ai_config_item_list.append(HiAiConfigItem("Confidence", self.get_value_by_name("Confidence")))
-        self.__ai_config_item_list.append(HiAiConfigItem("PresenterIp", self.get_value_by_name("PresenterIp")))
+        self.__ai_config_item_list.append(config.AIConfigItem("output_name", self.get_value_by_name("output_name")))
+        self.__ai_config_item_list.append(config.AIConfigItem("Confidence", self.get_value_by_name("Confidence")))
+        self.__ai_config_item_list.append(config.AIConfigItem("PresenterIp", self.get_value_by_name("PresenterIp")))
         self.__ai_config_item_list.append(
-            HiAiConfigItem("PresenterPort", self.get_value_by_name("PresenterPort")))
-        self.__ai_config_item_list.append(HiAiConfigItem("ChannelName", self.get_value_by_name("ChannelName")))
-        self.__ai_config_item_list.append(HiAiConfigItem("path", self.get_value_by_name("path")))
+            config.AIConfigItem("PresenterPort", self.get_value_by_name("PresenterPort")))
+        self.__ai_config_item_list.append(config.AIConfigItem("ChannelName", self.get_value_by_name("ChannelName")))
+        self.__ai_config_item_list.append(config.AIConfigItem("path", self.get_value_by_name("path")))
 
-        self.__ai_config = HiAiConfig(self.__ai_config_item_list)
+        self.__ai_config = config.AIConfig(self.__ai_config_item_list)
 
         if self.get_value_by_name("model_path"):
             self.__model_name = os.path.basename(self.get_value_by_name("model_path"))
@@ -231,3 +200,4 @@ def parse_graph_config(config_file):
         cfg = (eng_conf, ai_conf)
         engine_configs.append(cfg)
     return engine_configs
+

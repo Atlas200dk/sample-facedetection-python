@@ -87,7 +87,9 @@ class ResolutionC:
 
 class Dvpp:
     def __init__(self):
-        self.dvpp = ctypes.cdll.LoadLibrary("./hiai_media/libhiai_dvpp.so")
+        self.hiai =  ctypes.cdll.LoadLibrary("/usr/lib64/libhiai_common.so")
+        self.api = ctypes.cdll.LoadLibrary("/usr/lib64/libDvpp_api.so")
+        #self.dvpp = ctypes.cdll.LoadLibrary("/usr/lib64/libascend_ezdvpp.so")
 
     def ImageParamDataCopy(self, destImage, srcImage):
         destImage.format = srcImage.format
@@ -120,3 +122,6 @@ class Dvpp:
         self.dvpp.ResizeImage(destImageC, srcImageC)
         self.ImageParamDataCopy(destImage, destImageC)
 
+
+
+p = Dvpp()

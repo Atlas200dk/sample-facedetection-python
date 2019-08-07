@@ -16,15 +16,15 @@ kImagePixelOffsetEven = 1
 kImagePixelOffsetOdd = 2
 
 class FaceDetectionInference(engineobject.EngineObject):
-    def __init__(self,  engineConfig):
-        self.fd_model_desc = engineConfig.ai_model
-        #for item in aiConfig._ai_config_item:
-        #    if item.__name == "model_path":
-        #        self.fd_model_desc.path(item.__value)
-        #        break
-        #self.aiConfig = aiConfig
+    def __init__(self,  aiConfig):
+        for item in aiConfig._ai_config_item:
+            if item._AIConfigItem__name == "model_path":
+                modePath = item._AIConfigItem__value
+                break
+        self.fd_mode_desc = hiai.AIModelDescription("face_detect", modePath)
+        self.aiConfig = aiConfig
         self.subscribMsgList = ["BatchImageParaWithScaleT", ]
-        self.dvpp = dvpp.Dvpp()
+        
 
     def ImageSizeAlign(self, size):
         if size % 2 == 0:
@@ -51,7 +51,7 @@ class FaceDetectionInference(engineobject.EngineObject):
     def ResizeImageOfFrames(self, srcFrames):
         resizedImgList = []
         for i in range(0, srcFrames.b_info.batch_size):
-            resizedImg = IMG.ImageData()
+            resizedImg = image.ImageData()
             ret = self.ImagePreProcess(srcFrames.v_img[i].img, resizedImg)
             if ret != 0:
                 print("image pre process error")

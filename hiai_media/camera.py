@@ -63,21 +63,31 @@ class Camera:
         return self.camera.OpenCamera(cameraId)
 
     def SetCameraProperty(self, cameraId, prop, val):
+        
         if (prop == CameraProperties.CAMERA_PROP_RESOLUTION):
             arg = CameraResolution_C(val.width, val.height)
+            #arg.width = val.width
+            #arg.height = val.height
+            print("resulution width ", arg.width, " height ", arg.height)
+            pArg = byref(arg)
+            #pArg = cast(arg, POINTER(CameraResolution_C))
+            #print(pArg.contents.width, pArg.contents.height)
+            
+            
         else:
-            arg = val
-
-        return  self.camera.SetCameraProperty(cameraId, prop.value, c_void_p(id(arg)))
+            arg = c_int(val)
+            pArg = pointer(arg)
+        print("property: ", prop, " val ", arg)
+        return  self.camera.SetCameraProperty(cameraId, prop.value, pArg)
 
     def ReadFrameFromCamera(self, cameralId, dataBuf, size):
         #pdata = c_byte__p(dataBuf)
-        #imgSize = size
+        imgSize = c_int(size)
         #psize =  pointer(imgSize)
-        ret = self.camera.ReadFrameFromCamera(cameralId,dataBuf, size)
-		print("Camer Data Received:",dataBuf)
-		print("Data Lengh",size)
-        return ret, size
+        ret = self.camera.ReadFrameFromCamera(cameralId, byref(dataBuf), pointer(imgSize))
+        print("Camer Data Received:",dataBuf)
+        print("Data Lengh",imgSize)
+        return ret, imgSize
 
     def CloseCamera(self, cameralId):
         return self.camera.CloseCamera(cameralId)
