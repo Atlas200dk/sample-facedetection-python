@@ -17,6 +17,7 @@ class MsgQueueUnit():
 class MsgServer():
     def __init__(self):
         self.msgQueueList = []
+	self.mutex = Lock()
 
     def SubscribMsg(self, engine):
         msgQUnit = MsgQueueUnit(engine.subscribMsgList)

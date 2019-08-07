@@ -1,7 +1,8 @@
 #! /usr/bin/env python
 # coding=utf-8
 
-import hiai_media.hiai as hiai
+#import hiai_media.hiai as hiai
+import hiai
 import hiai_media.image as image
 import hiai_media.dvpp as dvpp
 import hiai_media.engineobject as engineobject
@@ -16,8 +17,8 @@ kImagePixelOffsetEven = 1
 kImagePixelOffsetOdd = 2
 
 class FaceDetectionInference(engineobject.EngineObject):
-    def __init__(self,  aiConfig):
-        self.fd_model_desc = hiai.AIModelDescription()
+    def __init__(self,  engineConfig):
+        self.fd_model_desc = engineConfig.ai_model
         #for item in aiConfig._ai_config_item:
         #    if item.__name == "model_path":
         #        self.fd_model_desc.path(item.__value)
