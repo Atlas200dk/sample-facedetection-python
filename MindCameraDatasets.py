@@ -52,6 +52,7 @@ class MindCameraDatasets(engineobject.EngineObject):
                       "YUV420SP": camera.CameraImageFormat.CAMERA_IMAGE_YUV420_SP.value}
 
         self.config = CameraDatasetsConfig()
+
         for item in aiConfig._ai_config_item:
             if item._AIConfigItem__name == "fps":
                 self.config.fps = int(item._AIConfigItem__value)
@@ -64,7 +65,7 @@ class MindCameraDatasets(engineobject.EngineObject):
                 self.config.resolutionWidth = int(resolutionStr[0])
                 self.config.resolutionHeight = int(resolutionStr[1])
             else:
-                print("unused config name:", item._AIConfigItem__name)
+                print("unused config name:", itemName)
 
     def CheckConfig(self):
         ret = 0

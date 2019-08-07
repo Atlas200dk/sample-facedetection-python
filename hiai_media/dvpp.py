@@ -5,8 +5,6 @@ from enum import Enum
 import ctypes
 from ctypes import *
 import copy
-
-#import hiai_image as image
 import image
 
 #jpege supports the following format input
