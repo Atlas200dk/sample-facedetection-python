@@ -149,8 +149,8 @@ class MindCameraDatasets(engineobject.EngineObject):
         # YUV size in memory is width * height * 3 / 2
         img_data.img.size = self.config.resolution_width * self.config.resolution_height * 3 / 2
         img_data.img.data = create_string_buffer(sizeof(c_byte) * img_data.img.size)
-        print("sizeof(c_byte)", sizeof(c_byte))
-        print("image buf size ", sizeof(img_data.img.data))
+        #print("sizeof(c_byte)", sizeof(c_byte))
+        #print("image buf size ", sizeof(img_data.img.data))
         pobj.v_img.append(img_data)
 
         return pobj
@@ -162,7 +162,7 @@ class MindCameraDatasets(engineobject.EngineObject):
             return False
 
         self.SetExitFlag(CAMERADATASETS_RUN)
-        i = 0
+        #i = 0
         print("start get frame from camera")
         while self.GetExitFlag() == CAMERADATASETS_RUN:
             imagePatch = self.CreateBatchImageParaObj()
@@ -170,17 +170,17 @@ class MindCameraDatasets(engineobject.EngineObject):
             imgSize = imgData.img.size
 
             # do read frame from camera
-            print("start read frame")
+            #print("start read frame")
             ret, readSize = self.cap.ReadFrameFromCamera(self.config.channel_id, imgData.img.data, imgSize)
             if ret != 1:
                 print("[CameraDatasets]Read frame from camera failed {camera:%d, ret:%d, size:%d, expectsize:%d}",
                       self.config.channel_id, ret, readSize, imgData.img.size)
                 break
-            print("ret ", ret, " readSize ", readSize)
-            f = open(str(i) + '.png', 'wb')
-            f.write(imgData.img.data)
-            f.close()
-            i += 1
+            #print("ret ", ret, " readSize ", readSize)
+            #f = open(str(i) + '.png', 'wb')
+            #f.write(imgData.img.data)
+            #f.close()
+            #i += 1
 
             ret = self.SendData("BatchImageParaWithScaleT", imagePatch)
             if ret != 0:

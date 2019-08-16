@@ -4,6 +4,7 @@
 import time
 import FaceDetectionInference as inferenceengine
 import MindCameraDatasets as datasetengine
+import FaceDetectionPostProcess as postprocessengine
 import hiai_media.config as configparser
 import hiai_media.engineobject as engineobject
 
@@ -20,10 +21,9 @@ class FaceDetectGraph():
             elif engineCfg[0].engine_name == "face_detection_inference":
                 engine = inferenceengine.FaceDetectionInference(engineCfg[1])
             elif engineCfg[0].engine_name == "face_detection_post_process":
-                continue
-                #engine = postengine.FaceDetectPost(engineCfg[1])
+                engine = postprocessengine.FaceDetectionPostProcess(engineCfg[1])
             else:
-                return
+                break
 
             msgQueue = msgCenter.SubscribMsg(engine)
             engine.SetupMsgCenter(msgCenter)

@@ -25,18 +25,18 @@ class MsgServer():
         return msgQUnit
 
     def SendMsg(self, msgTypeName, msgData):
-        print("send msg ", msgTypeName)
+        #print("send msg ", msgTypeName)
         for unit in self.msgQueueList:
             for type in unit.msgTypeList:
                 if type == msgTypeName:
-                    print("find the queue")
+                    #print("find the queue")
                     unit.msgQueue.put(msgTypeName)
 
                     self.mutex.acquire()
                     unit.dataQueue.put(msgData)
                     self.mutex.release()
 
-                    print("put end")
+                    #print("put end")
                     return 0
         
         print("Send msg %s failed", msgTypeName)

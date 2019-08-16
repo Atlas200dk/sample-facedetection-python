@@ -43,27 +43,6 @@ class VpcOutputFormat(Enum):
     OUTPUT_YUV420SP_UV = 0
     OUTPUT_YUV420SP_VU = 1
 
-class DvppBasicVpcPara:
-    def __init__(self):
-        input_image_type = VpcInputFormat.INPUT_YUV420_SEMI_PLANNER_UV
-        src_resolution = image.ResolutionRatio(0, 0)
-        crop_left = 0
-        crop_up = 0
-        crop_right = 0
-        crop_down = 0
-        output_image_type = VpcOutputFormat.OUTPUT_YUV420SP_UV
-        dest_resolution = image.ResolutionRatio(0, 0)
-        is_input_align = False
-        is_output_align = True
-
-class DvppVpcOutput:
-    def __init__(self, buf = None, sz = 0):
-        buffer = c_char_p(buf)
-        size = sz
-
-class DvppVpcOutput_C(Structure):
-    _fields_ = [('buffer', c_char_p),
-                ('size', c_uint)]
 
 
 class ImageData_C(Structure):
@@ -76,10 +55,10 @@ class ImageData_C(Structure):
         ('height_step', c_int),
         ('width_step',  c_int),
         ('size',        c_int),
-        ('data',        c_char_p)
+        ('data',        POINTER(c_byte))
     ]
 
-class ResolutionC:
+class ResolutionC(Structure):
     _fields_ = [
         ('width', c_uint),
         ('height', c_uint)
@@ -87,12 +66,11 @@ class ResolutionC:
 
 class Dvpp:
     def __init__(self):
-        self.hiai =  ctypes.cdll.LoadLibrary("/usr/lib64/libhiai_common.so")
-        self.api = ctypes.cdll.LoadLibrary("/usr/lib64/libDvpp_api.so")
-        #self.dvpp = ctypes.cdll.LoadLibrary("/usr/lib64/libascend_ezdvpp.so")
+        self.dvpp = ctypes.cdll.LoadLibrary("/usr/lib64/libascend_ezdvpp.so")
 
-    def ImageParamDataCopy(self, destImage, srcImage):
-        destImage.format = srcImage.format
+
+    def ImageParamDataCopy(self, destImage, srcImage, isObject2Structure = False):
+        #destImage.format = srcImage.format
         destImage.width = srcImage.width
         destImage.height = srcImage.height
         destImage.channel = srcImage.channel
@@ -100,28 +78,60 @@ class Dvpp:
         destImage.height_step = srcImage.height_step
         destImage.width_step = srcImage.width_step
         destImage.size = srcImage.size
-        destImage.data = srcImage.data
+        if isObject2Structure:
+            destImage.data = cast(srcImage.data, POINTER(c_byte))
+        else:
+            destImage.data = srcImage.data
 
     def ResizeImage(self, destImage, srcImage, destResution):
         srcImageC = ImageData_C()
-        self.ImageParamDataCopy(srcImageC, srcImage)
+        self.ImageParamDataCopy(srcImageC, srcImage, True)
+        srcImageC.format = srcImage.format.value
 
         resolution = ResolutionC()
         resolution.width = destResution.width
         resolution.height = destResution.height
 
-        destImageC = ImageData_C()
-        self.dvpp.ResizeImage(destImageC, srcImageC, resolution)
-        self.ImageParamDataCopy(destImage, destImageC)
+        resizedImageBufSize = srcImage.size / 6
+        destImage.data = create_string_buffer(sizeof(c_byte) * resizedImageBufSize)
+        print("call dvpp.ResizeImage start, image buffer size ", resizedImageBufSize)
+        resizedImageSize = self.dvpp.ResizeImage(byref(destImage.data), resizedImageBufSize, pointer(resolution), pointer(srcImageC))
+        if resizedImageSize <= 0:
+            print("Resize image failed, return ", resizedImageSize)
+            return 1
+        print("call dvpp.ResizeImage end, resized image size ", resizedImageSize)
+        destImage.size = resizedImageSize
+        destImage.format = srcImage.format
+        print("resize end")
+        return 0
 
-    def ConvImageYuvToJpeg(self, destImage, srcImage):
+    def ConvertImageYuvToJpeg(self, destImage, srcImage):
+        print("start convert image, start data ",
+              ord(srcImage.data[0]), ord(srcImage.data[1]), ord(srcImage.data[2]), ord(srcImage.data[3]),
+              ord(srcImage.data[4]), ord(srcImage.data[5]), ord(srcImage.data[6]), ord(srcImage.data[7]))
+
         srcImageC = ImageData_C()
 
-        self.ImageParamDataCopy(srcImageC, srcImage)
-        destImageC = ImageData_C()
-        self.dvpp.ResizeImage(destImageC, srcImageC)
-        self.ImageParamDataCopy(destImage, destImageC)
+        self.ImageParamDataCopy(srcImageC, srcImage, True)
+        srcImageC.format = srcImage.format.value
+
+        jpegImageBufSize = srcImage.size  * 2 / 3
+        destImage.data = create_string_buffer(sizeof(c_byte) * jpegImageBufSize)
+        print("call dvpp.ConvertImageToJpeg start, image buffer size ", jpegImageBufSize)
+        jpegSize = self.dvpp.ConvertImageToJpeg(byref(destImage.data), jpegImageBufSize, pointer(srcImageC))
+        if jpegSize <= 0:
+            print("Convert image failed, return ", jpegSize)
+            return 1
+        print("call dvpp.ConvertImageToJpeg end, jpeg image size ", jpegSize)
+        destImage.width = srcImage.width
+        destImage.height = srcImage.height
+        destImage.size = jpegSize
+
+        return 0
 
 
 
-p = Dvpp()
+
+
+
+

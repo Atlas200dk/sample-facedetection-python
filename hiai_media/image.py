@@ -51,8 +51,8 @@ class ImageData:
 
 class ResolutionRatio:
     def __init__(self, w = 0, h = 0):
-        width = w
-        height = h
+        self.width = w
+        self.height = h
 
 
 
