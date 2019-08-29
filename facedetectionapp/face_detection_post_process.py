@@ -168,7 +168,7 @@ class FaceDetectionPostProcess(AppEngine):
     def Process(self, data):
         start = datetime.now()
 
-        if data.status == False:
+        if data.outputData == None or data.outputData[0] == None or data.status == False:
             print("post engine handle original image.")
             ret = self.HandleOriginalImage(data)
         else:

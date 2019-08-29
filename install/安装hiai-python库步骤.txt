@@ -1,0 +1,21 @@
+1.开发板需联网，教程：https://bbs.huaweicloud.com/forum/thread-14817-1-1.html
+2.检查开发板是否安装了python2版本的easy_install（可以运行ez_setup.py进行安装）
+3.检查开发板是否安装了pip，由于开发板不能使用apt命令安装软件，所以需使用源码安装pip：
+	进入pip文件夹，执行python setup.py install命令安装pip
+4.执行命令easy_install hiaiengine-py2.7.egg
+5.运行脚本python2_hiai_install.sh
+6.进入python环境，import hiai测试安装结果
+
+报错：
+1.no model named ***
+尝试使用pip安装缺少的库：
+pip install ***
+使用如上命令时如果报验证错误，则pip命令需要增加参数：
+pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org ***
+
+如果仍然不能使用pip安装，可使用源码安装方式
+
+2.无法从enum包中导入unique
+安装enum34库解决
+
+
