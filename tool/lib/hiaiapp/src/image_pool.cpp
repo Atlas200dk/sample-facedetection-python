@@ -145,7 +145,7 @@ void ReleasePoolNode(POOL_TYPE poolType, int imageId)
 				g_ImagePool[poolType].usedNum--;
 			if (poolList[i].image.data != NULL)
 			{
-				delete poolList[i].image.data;
+				delete [] poolList[i].image.data;
 				poolList[i].image.data = NULL;
 			}
 		}
