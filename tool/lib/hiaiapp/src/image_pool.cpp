@@ -72,7 +72,7 @@ ImageData* GetIdleImageNode(POOL_TYPE poolType, uint32_t imageSize, uint32_t ima
 		poolList[i].image.size = imageSize;
 		poolList[i].image.id = imageIdx;
 		poolList[i].used = 1;
-		poolList->used++;
+		poolList->usedNum++;
 		idleImageNode = &(poolList[i].image);
 		break;
 	}
