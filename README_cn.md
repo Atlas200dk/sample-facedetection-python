@@ -45,7 +45,8 @@
 	**图 2**  Presenter Server进程启动<a name="zh-cn_topic_0167071573_fig184321447181018"></a>  
 	![](doc/source/img/PresenterServerStartup.png "Presenter Server进程启动")  
 	
-	使用[图2](#zh-cn_topic_0167071573_fig184321447181018)提示的URL登录Presenter Server，仅支持Chrome浏览器。IP地址为图中输入的IP地址，端口号默为7007，如图3<a name="zh-cn_topic_0167071573_fig184321447181019"></a>  所示，表示Presenter Server启动成功。 
+	使用[图2](#zh-cn_topic_0167071573_fig184321447181018)提示的URL登录Presenter Server，仅支持Chrome浏览器。IP地址为图中输入的IP地址，端口号默为7007，如图3<a name="zh-cn_topic_0167071573_fig184321447181019"></a>  所示，表示Presenter Server启动成功。    
+	
 	**图 3**  Presenter Server页面<a name="zh-cn_topic_0167071573_fig184321447181019"></a>  
 	![](doc/source/img/PresenterServerWeb.png "Presenter Server页面")  	
 
