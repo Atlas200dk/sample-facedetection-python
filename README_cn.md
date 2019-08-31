@@ -15,7 +15,8 @@
     在UIHost端root用户下，进入sample-facedetection-python目录下的script目录执行bash install_uihost.sh即可完成所有配置。
 -   步骤 2 获取源码包。
 
-    将https://github.com/Ascend/sample-facedetection-python仓中的代码下载至所在Ubuntu服务器的任意目录，例如代码存放路径为：$HOME/ascend/sample-facedetection-python。
+    将https://github.com/Ascend/sample-facedetection-python  
+	仓中的代码下载至所在Ubuntu服务器的任意目录，例如代码存放路径为：$HOME/ascend/sample-facedetection-python。
 
 
 ## 部署<a name="zh-cn_topic_0167071573_section7994174585917"></a>
@@ -42,11 +43,11 @@
 	bash run_presenterserv.sh
 
 	**图 2**  Presenter Server进程启动<a name="zh-cn_topic_0167071573_fig184321447181018"></a>  
-	![](doc/source/img/Presenter Server进程启动.png "Presenter Server进程启动")  
+	![](doc/source/img/PresenterServerStartup.png "Presenter Server进程启动")  
 	
 	使用[图2](#zh-cn_topic_0167071573_fig184321447181018)提示的URL登录Presenter Server，仅支持Chrome浏览器。IP地址为图中输入的IP地址，端口号默为7007，如图3<a name="zh-cn_topic_0167071573_fig184321447181019"></a>  所示，表示Presenter Server启动成功。 
 	**图 3**  Presenter Server页面<a name="zh-cn_topic_0167071573_fig184321447181019"></a>  
-	![](doc/source/img/Presenter Server页面.png "Presenter Server页面")  	
+	![](doc/source/img/PresenterServerWeb.png "Presenter Server页面")  	
 
 
 ## 运行
@@ -56,8 +57,8 @@
 -   步骤 2 在UIHost端使用启动Presenter Server服务时提示的URL登录 Presenter Server 网站，详细可参考部署的步骤2。
 	等待Presenter Agent传输数据给服务端，单击“Refresh”刷新，当有数据时相应的Channel 的Status变成绿色，如图3.2所示。
 
-	**图 4**  Presenter Sever界面<a name="zh-cn_topic_0167071573_fig184321447181020"></a>  
-    ![](doc/source/img/Presenter Server运行.png "Presenter Server运行.png")  
+	**图 4**  Presenter Sever运行<a name="zh-cn_topic_0167071573_fig184321447181020"></a>  
+    ![](doc/source/img/PresenterServerRun.png "Presenter Server运行.png")  
 
 	Face Detection的Presenter Server最多支持10路Channel同时显示，每个 presenter_view_app_name 对应一路Channel。
 	由于硬件的限制，每一路支持的最大帧率是20fps，受限于网络带宽的影响，帧率会自动适配为较低的帧率进行展示。
