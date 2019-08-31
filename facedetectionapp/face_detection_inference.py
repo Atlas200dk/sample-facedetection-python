@@ -60,6 +60,7 @@ class FaceDetectionInference(AppEngine):
                 break
         self.aiConfig = aiConfig
         self.isAligned = True
+        self.first = True
 
     def ResizeImageOfFrame(self, srcFrame):
         resizedImgList = []
@@ -105,26 +106,35 @@ class FaceDetectionInference(AppEngine):
             ssd = {"name": "face_detection", "path": self.modelPath}
             nntensor = hiai.NNTensor(nArray)
             tensorList = hiai.NNTensorList(nntensor)
-            graph = hiai.Graph(hiai.GraphConfig(graph_id=2001))
-            with graph.as_default():
-                engine_config = hiai.EngineConfig(engine_name="HIAIDvppInferenceEngine",
+            
+            if self.first == True:
+                
+                self.graph = hiai.Graph(hiai.GraphConfig(graph_id=2001))
+                with self.graph.as_default():
+                    self.engine_config = hiai.EngineConfig(engine_name="HIAIDvppInferenceEngine",
                                                   side=hiai.HiaiPythonSide.Device,
                                                   internal_so_name='/lib/libhiai_python_device2.7.so',
                                                   engine_id=2001)
-                engine = hiai.Engine(engine_config)
-                ai_model_desc = hiai.AIModelDescription(name=ssd['name'], path=ssd['path'])
-                ai_config = hiai.AIConfig(hiai.AIConfigItem("Inference", "item_value_2"))
-                final_result = engine.inference(input_tensor_list=tensorList,
-                                                ai_model=ai_model_desc,
-                                                ai_config=ai_config)
-            ret = copy.deepcopy(graph.create_graph())
-            if ret != hiai.HiaiPythonStatust.HIAI_PYTHON_OK:
-                print("create graph failed, ret", ret)
-                d_ret = graph.destroy()
-                SetExitFlag(True)
-                return HIAI_APP_ERROR, None 
-            resTensorList = graph.proc(input_nntensorlist=tensorList)
-            graph.destroy()
+                    self.engine = hiai.Engine(self.engine_config)
+                    self.ai_model_desc = hiai.AIModelDescription(name=ssd['name'], path=ssd['path'])
+                    self.ai_config = hiai.AIConfig(hiai.AIConfigItem("Inference", "item_value_2"))
+                    final_result = self.engine.inference(input_tensor_list=tensorList,
+                                                ai_model=self.ai_model_desc,
+                                                ai_config=self.ai_config)
+                ret = copy.deepcopy(self.graph.create_graph())
+                if ret != hiai.HiaiPythonStatust.HIAI_PYTHON_OK:
+                    print("create graph failed, ret", ret)
+                    d_ret = graph.destroy()
+                    SetExitFlag(True)
+                    return HIAI_APP_ERROR, None 
+                self.first = False
+            else:
+                with self.graph.as_default():
+                    final_result = self.engine.inference(input_tensor_list=tensorList,
+                                                ai_model=self.ai_model_desc,
+                                                ai_config=self.ai_config)
+            resTensorList = self.graph.proc(input_nntensorlist=tensorList)
+            print("Inference result: ", resTensorList[0].shape)
             result.append(resTensorList)
         return HIAI_APP_OK, result
 
