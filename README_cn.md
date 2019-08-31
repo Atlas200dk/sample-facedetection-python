@@ -28,10 +28,10 @@
 	
 	在终端键入bash network_uihost.sh USB网卡名称 外网地址 自动完成UIHost联网操作
 	
-	**图 1**  工程部署示意图<a name="zh-cn_topic_0167071573_fig184321447181017"></a>
+	**图 1**  网口配置<a name="zh-cn_topic_0167071573_fig184321447181017"></a>  
 	![](doc/source/img/ifconfig.png "网口配置图")
 	
-	例如：如图1所示，则应该写成bash network_uihost.sh ens33 ens35u1
+	例如：如[图1](#zh-cn_topic_0167071573_fig184321447181017)所示，则应该写成bash network_uihost.sh ens33 ens35u1
 
 	在终端键入./network_host.sh进行Host更新与安装依赖
 	
