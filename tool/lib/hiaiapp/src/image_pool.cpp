@@ -135,7 +135,7 @@ void ReleasePoolNode(POOL_TYPE poolType, int imageId)
 			continue;
 		}
 
-		if ((poolList[i].image.id <= imageId) && poolList[i].used)
+		if (poolList[i].image.id == imageId)
 		{
 			APP_LOG_INFO("Release image  pool %d, node %d for imgage %d ", poolType, i, imageId);
 

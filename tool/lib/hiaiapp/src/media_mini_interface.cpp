@@ -73,7 +73,10 @@ int HiaiApp_ReadFrameFromCamera(int cameralId, ImageData& image)
 	int32_t size = image.size;
 
 	while (!GetRemainderPoolNodeNum(FRAME_POOL))
+	{
+		APP_LOG_INFO("Frame pool is full, wait 0.5s");
 		usleep(500 * 1000);
+	}
 
 	int ret = ReadFrameFromCamera(cameralId, (void*)data, &size);
 	if (!ret)

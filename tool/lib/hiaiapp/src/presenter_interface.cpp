@@ -80,7 +80,7 @@ void* ThreadFunction(void* arg)
 	ImageFrameMsg* msg = NULL;
 	for (;;)
 	{
-		while (!msgQueue.RecvMsg(&msg))
+		while ((0 == msgQueue.RecvMsg(&msg)) && (msg != NULL))
 		{
 			SendImageToServer(msg);
 			delete msg;
@@ -188,10 +188,14 @@ int OpenChannelEx(const struct OpenChannelParamC& param)
 
 int SendImage(int channel, ImageData& image, struct DetectionResultC* detectionResults, uint32_t size)
 {
-	APP_LOG_INFO("Send image %d", image.id);
+	APP_LOG_INFO("Send image %d, detect result size %d", image.id, size);
 
-	// parameter
-	ImageFrame image_frame_para;
+	ImageFrameMsg* msg = new ImageFrameMsg();
+	msg->channel = channel;
+	msg->srcImage.data = image.data;
+	msg->srcImage.id = image.id;
+
+	ImageFrame& image_frame_para = msg->frame;
 	image_frame_para.format = ImageFormat::kJpeg;
 	image_frame_para.width = image.width;
 	image_frame_para.height = image.height;
@@ -206,12 +210,7 @@ int SendImage(int channel, ImageData& image, struct DetectionResultC* detectionR
 		one_result.result_text = detectionResults[i].result_text;
 		image_frame_para.detection_results.emplace_back(one_result);
 	}
-	
-	ImageFrameMsg* msg = new ImageFrameMsg();
-	msg->channel = channel;
-	msg->frame = image_frame_para;
-	msg->srcImage.data = image.data;
-	msg->srcImage.id = image.id;
+
 	return SendFrameMsg(msg);
 }
 
