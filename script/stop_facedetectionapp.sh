@@ -1,7 +1,18 @@
 #!/usr/bin/expect
-set username HwHiAiUser
-set ip 192.168.1.2
-set passwd Mind@123
+
+set username [lrange $argv 0 0]
+set passwd [lrange $argv 1 1]
+
+if { "$username" == "" } {
+        puts "Default Username is:HwHiAiUser@192.168.1.2"
+        set username HwHiAiUser@192.168.1.2
+} 
+if { "$passwd" == "" } {
+        puts "Default Password is:Mind@123"
+        set passwd Mind@123
+} 
+
+
 
 spawn ssh $username@$ip
 expect {

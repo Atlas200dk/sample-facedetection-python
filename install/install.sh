@@ -1,5 +1,11 @@
 ﻿#!/bin/bash 
+. ./installall.sh
 cp libascend_ezdvpp.so /usr/lib64
+if [ $? == "0" ] ;then
+echo "libascend_ezdvpp.so copy success!"
+else
+echo "libascend_ezdvpp.so copy failed!"
+fi
 echo "setuptools is installing"
 if [ -d "./setuptools-41.2.0" ] ;then
 rm -rf ./setuptools-41.2.0
@@ -15,54 +21,27 @@ cd ../
 if [ -d "./setuptools-41.2.0" ] ;then
 rm -rf ./setuptools-41.2.0
 fi
- dir=`ls ./` #定义遍历的目录
- for i in $dir
- do
- extension="${i##*.}"
-     if [ "$extension" = "gz" ] ;then
-        echo "${i} is installing"
-        filename=${i%.tar*}
-        echo "filename:${filename}"
-        if [ -d "${filename}" ];then
-          rm -rf ${filename}
-        fi
-        tar zxvf $i > /dev/null 2>&1
-        cd ${filename}
-        if [ -f "setup.py" ] ;then
-           python "setup.py" install > /dev/null
-           cd ../
-           echo "${i} installed success"
-            if [ -d "${filename}" ];then
-               rm -rf ${filename}
-            fi
-        else
-           echo "${i} installed failed"
-        fi
-        
-     elif [ "$extension" = "zip" -a "$i" != "setuptools-41.2.0.zip" ] ;then
-         echo "${i} is installing"
-        filename=${i%.*}
-        echo "filename:${filename}"
-        if [ -d "${filename}" ];then
-          rm -rf ${filename}
-        fi
-        unzip $i > /dev/null 2>&1
-        cd ${filename}
-        if [ -f "setup.py" ] ;then
-           python "setup.py" install
-           cd ../
-           echo "${i} installed success"
-           if [ -d "${filename}" ];then
-              rm -rf ${filename}
-           fi
-        else
-           echo "${i} installed failed"
-        fi
-     fi
- done
+ 
+installall
 
-easy_install egg/hiaiengine-py2.7.egg
+
+if [ -f ""/usr/lib64/hiaiengine-py2.7.egg"" ] ;then
+easy_install "/usr/lib64/hiaiengine-py2.7.egg"
 bash python2_hiai_install.sh
+if [ $? == "0" ] ;then
+echo "hiaiengine-py install success!"
+else
+echo "hiaiengine-py2.7 install failed!"
+fi
+else
+echo "hiaiengine-py2.7.egg install failed for not exist!"
+fi
+
+
 python check.py
+if [ -z "$LD_LIBRARY_PATH" ] ;then
 echo 'export LD_LIBRARY_PATH=/home/HwHiAiUser/sample-facedetection-python/facedetectionapp/hiaiapp/lib:$LD_LIBRARY_PATH' >> /etc/profile
 source /etc/profile
+echo "environment config success!"
+else
+echo "environment already exist!"
