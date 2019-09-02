@@ -121,12 +121,9 @@ def YuvImageSize(resolution):
     return resolution.width * resolution.height * 3 / 2
 
 def Yuv2Array(yuvImg):
-    nArray = np.zeros(shape=(yuvImg.size/8,), dtype='uint64', order='C')
-    newdata = cast(yuvImg.data, POINTER(c_ulonglong))
-    for i in range(0, yuvImg.size/8):
-        nArray[i]=newdata[i]
 
-    nArray.dtype=np.uint8
+    nArray = np.frombuffer(np.core.multiarray.int_asbuffer(addressof(yuvImg.data.contents), yuvImg.size*np.dtype(np.uint8).itemsize))
+    nArray.dtype = np.uint8
     nArray = nArray.reshape((yuvImg.height * 3 // 2, yuvImg.width)).astype('uint8')  # YUV 的存储格式为：NV12（YYYY UV）
 
     return nArray
