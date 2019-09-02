@@ -1,32 +1,14 @@
-#!/usr/bin/expect
+#!/usr/bin/bash
 
-set username [lrange $argv 0 0]
-set passwd [lrange $argv 1 1]
+username=$1
+if [ "$#"="0" ];then
+echo default login username is HwHiAiUser@192.168.1.2
+username="HwHiAiUser@192.168.1.2"
+fi
+echo -------------------------------------------------
+echo -"1.first,input the login board password"       -
+echo -"2.then,input the the board root user password"-
+echo -------------------------------------------------
 
-if { "$username" == "" } {
-        puts "Default Username is:HwHiAiUser@192.168.1.2"
-        set username HwHiAiUser@192.168.1.2
-} 
-if { "$passwd" == "" } {
-        puts "Default Password is:Mind@123"
-        set passwd Mind@123
-} 
+ssh -t ${username} "su - root -c \"cd /home/HwHiAiUser/sample-facedetection-python/facedetectionapp; python stop.py\""
 
-
-
-spawn ssh $username@$ip
-expect {
-	"(yes/no)?" {  send "yes\r";exp_continue }
-	"password:" { send "$passwd\r" }
-}
-
-expect "$username"
-send "su root\r"
-expect "Password"
-send "${passwd}\r"
-expect "root"
-send "cd sample-facedetection-python\r"
-expect "root"
-send "python stop.py\r"
-expect eof
-interact

@@ -1,21 +1,13 @@
-#!/usr/bin/expect
-set username HwHiAiUser
-set ip 192.168.1.2
-set passwd Mind@123
+##!/usr/bin/bash
 
-spawn ssh $username@$ip
-expect {
-	"(yes/no)?" {  send "yes\r";exp_continue }
-	"password:" { send "$passwd\r" }
-}
+username=$1
+if [ "$#"="0" ];then
+echo default login username is HwHiAiUser@192.168.1.2
+username="HwHiAiUser@192.168.1.2"
+fi
+echo -------------------------------------------------
+echo -"1.first,input the login board password"       -
+echo -"2.then,input the the board root user password"-
+echo -------------------------------------------------
 
-expect "$username"
-send "su root\r"
-expect "Password"
-send "${passwd}\r"
-expect "root"
-send "cd sample-facedetection-python/install\r"
-expect "install"
-send "bash install.sh\r"
-expect eof
-interact
+ssh -t ${username} "su - root -c \"cd /home/HwHiAiUser/sample-facedetection-python/install; bash install.sh\""
