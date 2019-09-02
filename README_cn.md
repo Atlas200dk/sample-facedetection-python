@@ -10,10 +10,6 @@
 -   开发板完成相关Python环境和系统必要配置。
 
 ## 环境配置
--   步骤 1 UIHost端配置相关环境。
-
-    在UIHost端root用户下，进入sample-facedetection-python目录下的script目录执行bash install_uihost.sh即可完成所有配置。
--   步骤 2 获取源码包。
 
     将https://github.com/Ascend/sample-facedetection-python  
 	仓中的代码下载至所在Ubuntu服务器的任意目录，例如代码存放路径为：$HOME/ascend/sample-facedetection-python。
@@ -25,16 +21,13 @@
 
 	在终端键入bash deploy.sh按照提示输入两次密码即可完成deploy操作
 	
-	在终端键入bash install_host.sh自动完成环境依赖安装
-	
-	在终端键入bash network_uihost.sh USB网卡名称 外网地址 自动完成UIHost联网操作
+	在终端键入bash network.sh USB网卡名称 外网地址 且输入自己的HwHiAiUser用户密码和Host端root用户密码，完成Host端更新环境和安装依赖的操作
 	
 	**图 1**  网口配置<a name="zh-cn_topic_0167071573_fig184321447181017"></a>  
 	![](doc/source/img/ifconfig.png "网口配置图")
 	
-	例如：如[图1](#zh-cn_topic_0167071573_fig184321447181017)所示，则应该写成bash network_uihost.sh ens33 ens35u1
+	例如：如[图1](#zh-cn_topic_0167071573_fig184321447181017)所示，则应该写成bash network.sh ens33 ens35u1
 
-	在终端键入./network_host.sh进行Host更新与安装依赖
 	
 -   步骤 2 启动Presenter Server。
 
@@ -54,7 +47,9 @@
 ## 运行
 -   步骤 1 运行sample-facedetection-python程序。
 	以root用户在UIHost端的终端切换到sample-facedetection-python/script运行应用程序。
-	bash run.sh
+	bash run_facedetectionapp.sh 用户名@ip
+
+    注意：期间按照提示输入Host登录密码和root用户密码完成操作，如果不输入参数 用户名@ip默认为HwHiAiUser@192.168.1.2
 -   步骤 2 在UIHost端使用启动Presenter Server服务时提示的URL登录 Presenter Server 网站，详细可参考部署的步骤2。
 	等待Presenter Agent传输数据给服务端，单击“Refresh”刷新，当有数据时相应的Channel 的Status变成绿色，如图3.2所示。
 
@@ -71,7 +66,9 @@
 
     Face Detection应用执行后会处于持续运行状态，若要停止sample-facedetection-python应用程序，在到UIHost端以root用户切换单sample-facedetection-python/script目录下执行终端命令
     
-	bash stop.sh
+	bash stop_facedetectionapp.sh 用户名@ip
+
+    注意：期间按照提示输入Host登录密码和root用户密码完成操作，如果不输入参数 用户名@ip默认为HwHiAiUser@192.168.1.2
 
 -   **停止Presenter Server服务**
 

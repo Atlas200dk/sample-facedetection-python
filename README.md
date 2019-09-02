@@ -10,11 +10,6 @@ Before using an open source application, ensure that:
 -   The Atlas 200 DK developer board complete the necessary configuration of Python environment and system.
 
 ## Enviroment Configuration
--   Step 1 Configure the relevant environment in UIHost.
-
-    Switch to root user in UIHost，and enter the directory sample-facedetection-python/script,execute terminal commands bash install_uihost.sh to finish the configuration.
--   Step 2 Obtain the source code package.
-
     Download all the code in the sample-facedetection repository at  [https://github.com/Ascend/sample-facedetection-python]
     (https://github.com/Ascend/sample-facedetection-python)  to any directory on Ubuntu Server where MindSpore Studio is located as the MindSpore 
     Studio installation user, for example,  _/home/ascend/sample-facedetection/_.
@@ -25,17 +20,16 @@ Before using an open source application, ensure that:
 
 	input bash deploy.sh in terminal to finish deplotment.
 	
-	input bash install_host.sh to finish the dependency.
 	
-	input bash network_uihost.sh USB name Extranet address to finish network configuration.
+	input bash network.sh USB name Extranet address to finish network configuration.
 	
 	for example：The following figure shown，the command should be bash network_uihost.sh ens33 ens35u1.
 
-	input ./network_host.sh to finish upgrade and dependency.
+	input ./network.sh to finish upgrade and dependency.
 	
 -   Step 2 Strat Presenter Server。
 
-	Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following commands to run the presenter saerver
+	Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following commands to run the presenter server
 	
 	bash run_presenterserv.sh
 
@@ -50,7 +44,11 @@ Before using an open source application, ensure that:
 ## Running
 -   Step 1 Run sample-facedetection-python application。
 	Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following commands to run the application
-	bash run.sh
+
+	bash run_facedetectionapp.sh username@ip
+    
+    Tips:running the shell need to input password twice.first time ,the password is the username's password,the second ,the password is the root user's password.if paramter not given,the default is HwHiAiUser@192.168.1.2
+
 -   Step 2 Use the URL that is displayed when you start the Presenter Server service to log in to the Presenter Server website. For details, see the Deployment Step 2
 	Wait for Presenter Agent to transmit data to the server. Click  **Refresh**. When there is data, the icon in the  **Status**  column for the corresponding channel changes to green, as shown in following figure.
 
@@ -67,7 +65,9 @@ Before using an open source application, ensure that:
 
     The face detection application is running continually after being executed. To stop it, perform the following operation:
     
-	bash stop.sh
+	bash stop_facedetectionapp.sh username@ip
+    
+    Tips:running the shell need to input password twice. first time ,the password is the username's password,the second ,the password is the root user's password.if paramter not given,the default is HwHiAiUser@192.168.1.2
 
 -   **Stop Presenter Server Service**
 
