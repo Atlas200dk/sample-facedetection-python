@@ -54,14 +54,16 @@
 
 
 ## 运行
--   步骤 1 运行sample-facedetection-python程序。
+-   步骤 1<a name="zh-cn_topic_0167071573_fig184321447181032"></a> 运行sample-facedetection-python程序。
 	进入sample-facedetection-python的script目录，切换到root用户:
 
         cd sample-facedetection-python/script/
         su root 
 	
 	然后执行命令
-	bash run_facedetectionapp.sh <用户名>@<ip>
+	
+	bash run_facedetectionapp.sh <用户名>@<ip>      
+	
         其中：   
        （1）用户名参数为开发板的登录用户名，默认为HwHiAiUser   
        （2）ip参数为开发板网口地址。采用usb网口连接时，默认地址是192.168.1.2； 网线连接时，默认地址是192.168.0.2    
@@ -81,14 +83,24 @@
 
 -   **停止Face Detection应用**
 
-    Face Detection应用执行后会处于持续运行状态，若要停止sample-facedetection-python应用程序，在到UIHost端以root用户切换单sample-facedetection-python/script目录下执行终端命令
+        执行Face Detection运行脚本后， 应用会处于持续运行状态。若要停止应用程序，可以在UIHost端进入ample-facedetection-python/script目录，切换到root用户
     
-	bash stop_facedetectionapp.sh <用户名@ip
+        cd sample-facedetection-python/script/
+        su root
+	
+	执行如下命令
+	
+	bash stop_facedetectionapp.sh <用户名>@<ip>
 
-    注意：期间按照提示输入Host登录密码和root用户密码完成操作，如果不输入参数 用户名@ip默认为HwHiAiUser@192.168.1.2
+        用户名和ip参数通运行步骤[1](#zh-cn_topic_0167071573_fig184321447181032)，如果不输入参数 默认为HwHiAiUser@192.168.1.2
 
 -   **停止Presenter Server服务**
 
-    Face Detection的Presenter Server执行后会处于持续运行状态，若要停止Presenter Server应用程序，在到UIHost端以root用户切换单sample-facedetection-python/script目录下执行终端命令
+        Face Detection的Presenter Server启动后会处于持续运行状态。若要停止Presenter Server应用程序，可以在UIHost端进入sample-facedetection-python/script目录下，切换到root用户
+	
+	cd sample-facedetection-python/script/
+        su root
+
+        执行终端命令
     
 	bash stop_presenterserver.sh
