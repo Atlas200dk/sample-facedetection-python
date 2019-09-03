@@ -22,11 +22,14 @@
         cd sample-facedetection-python/script/
         su root 
         
-	然后执行命令：
+	然后执行如下命令完成部署：
 
-	bash deploy.sh <用户名> <ip地址> <usb网卡名> <外网名> 
+	bash deploy.sh <用户名> <ip地址> <内网口名> <外网口名>   
 	
-	即可完成样例的部署。命令执行过程中需要按照提示输入用户名密码等信息。
+	用户名：  开发板普通用户名，默认为HwHiAiUser    
+	ip地址：  开发板网口地址。使用usb连接时默认为192.168.1.2, 使用网线连接时默认为192.168.0.2   
+	内网口名：UIHost上和开发板连接的网口名。在UIHost上使用ifconfig可以查看
+        外网口名：UIHost连接Internet的网口名
     
 	示例：
 
