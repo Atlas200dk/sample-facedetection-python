@@ -81,18 +81,18 @@
 
 ## 后续处理
 
--   **停止Face Detection应用**
-
-        执行Face Detection运行脚本后， 应用会处于持续运行状态。若要停止应用程序，可以在UIHost端进入ample-facedetection-python/script目录，切换到root用户
+-   **停止Face Detection应用**	
+	
+	执行Face Detection运行脚本后， 应用会处于持续运行状态。若要停止应用程序，可以在UIHost端进入ample-facedetection-python/script目录，切换到root用户
     
         cd sample-facedetection-python/script/
         su root
 	
-	执行如下命令
+	执行命令
+        
+        bash stop_facedetectionapp.sh <用户名>@<ip> 
 	
-	bash stop_facedetectionapp.sh <用户名>@<ip>
-
-        用户名和ip参数通运行步骤[1](#zh-cn_topic_0167071573_fig184321447181032)，如果不输入参数 默认为HwHiAiUser@192.168.1.2
+	用户名和ip参数通运行步骤[1](#zh-cn_topic_0167071573_fig184321447181032)，如果不输入参数 默认为HwHiAiUser@192.168.1.2
 
 -   **停止Presenter Server服务**
 
