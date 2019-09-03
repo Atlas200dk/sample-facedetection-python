@@ -1,10 +1,10 @@
 #!/bin/bash
 
-function main()
+function network()
 {
-interface_1=$1
-interface_2=$2
-board_ip=$3
+interface_1=$3
+interface_2=$4
+board_ip=$2
 if [ "x" == "x${interface_1}" ] ;then
 echo "arg1 is null."
 return 1
@@ -41,4 +41,4 @@ ssh -t HwHiAiUser@${board_ip} "su - root -c \"ip route change default via ${host
 return 0
 
 }
-main $@
+

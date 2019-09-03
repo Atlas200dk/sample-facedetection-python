@@ -18,14 +18,12 @@ Before using an open source application, ensure that:
 	The deployment should be in UIHost.
 -   Step 1 Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following commands.
 
-	input bash deploy.sh in terminal to finish deplotment.
+	input bash deploy.sh username board-ip usb-network-card-name computer -network-card-name in terminal to finish deployment.
 	
-	
-	input bash network.sh USB name Extranet address to finish network configuration.
-	
-	for example：The following figure shown，the command should be bash network_uihost.sh ens33 ens35u1.
+	for example：The following figure shown，if username is HwHiAiUser,ip is 192.168.1.2 .the command should be 
+    
+    bash deploy.sh HwHiAiUser 192.168.1.2 ens33 ens35u1
 
-	input ./network.sh to finish upgrade and dependency.
 	
 -   Step 2 Strat Presenter Server。
 

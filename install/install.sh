@@ -5,6 +5,7 @@ if [ $? == "0" ] ;then
 echo "libascend_ezdvpp.so copy success!"
 else
 echo "libascend_ezdvpp.so copy failed!"
+exit 1
 fi
 echo "setuptools is installing"
 if [ -d "./setuptools-41.2.0" ] ;then
@@ -32,6 +33,7 @@ if [ $? == "0" ] ;then
 echo "hiaiengine-py install success!"
 else
 echo "hiaiengine-py2.7 install failed!"
+exit 1
 fi
 else
 echo "hiaiengine-py2.7.egg install failed for not exist!"
@@ -45,3 +47,4 @@ source /etc/profile
 echo "environment config success!"
 else
 echo "environment already exist!"
+fi

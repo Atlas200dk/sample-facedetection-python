@@ -19,14 +19,16 @@
 	部署操作全部在UIHost端操作
 -   步骤 1 以root用户在终端切换到sample-facedetection-python的script目录，然后执行下列指令。
 
-	在终端键入bash deploy.sh按照提示输入两次密码即可完成deploy操作
-	
-	在终端键入bash network.sh USB网卡名称 外网地址 且输入自己的HwHiAiUser用户密码和Host端root用户密码，完成Host端更新环境和安装依赖的操作
-	
+	在终端键入bash deploy.sh 用户名 ip地址 usb网卡名 外网名 按照提示即可完成deploy操作
+    
+	示例：
+
 	**图 1**  网口配置<a name="zh-cn_topic_0167071573_fig184321447181017"></a>  
 	![](doc/source/img/ifconfig.png "网口配置图")
 	
-	例如：如[图1](#zh-cn_topic_0167071573_fig184321447181017)所示，则应该写成bash network.sh ens33 ens35u1
+	例如：如[图1](#zh-cn_topic_0167071573_fig184321447181017)所示，假设自己的用户用户名为HwHiAiUser,开发板ip地址为192.168.1.2,则终端命令应该写成
+
+    bash deploy.sh HwHiAiUser 192.168.1.2 ens33 ens35u1
 
 	
 -   步骤 2 启动Presenter Server。
