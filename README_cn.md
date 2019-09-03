@@ -92,7 +92,7 @@
         
         bash stop_facedetectionapp.sh <用户名>@<ip> 
 	
-	用户名和ip参数通运行步骤[1](#zh-cn_topic_0167071573_fig184321447181032)，如果不输入参数 默认为HwHiAiUser@192.168.1.2
+	用户名和ip参数参见运行节步骤[1](#zh-cn_topic_0167071573_fig184321447181032)，如果不输入参数 默认为HwHiAiUser@192.168.1.2
 
 -   **停止Presenter Server服务**
 
