@@ -11,13 +11,13 @@
 
 ## 环境配置
 
-    将https://github.com/Ascend/sample-facedetection-python  
-	仓中的代码下载至所在Ubuntu服务器的任意目录，例如代码存放路径为：$HOME/ascend/sample-facedetection-python。
+   将https://github.com/Ascend/sample-facedetection-python    
+   仓中的代码下载至所在Ubuntu服务器（UIHost）的任意目录，例如代码存放路径为：$HOME/ascend/sample-facedetection-python。
 
 
-## 部署<a name="zh-cn_topic_0167071573_section7994174585917"></a>
-	部署操作全部在UIHost端操作
--   步骤 1 进入sample-facedetection-python的script目录，切换到root用户:
+## 部署<a name="zh-cn_topic_0167071573_section7994174585917"></a>    
+        
+-   步骤 1 在UIHost服务器上，进入sample-facedetection-python的script目录，并切换到root用户:
 
         cd sample-facedetection-python/script/
         su root 
