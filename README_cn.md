@@ -97,10 +97,10 @@
 -   **停止Presenter Server服务**
 
        Face Detection的Presenter Server启动后会处于持续运行状态。若要停止Presenter Server应用程序，可以在UIHost端进入sample-facedetection-python/script目录下，切换到root用户
-	
-	cd sample-facedetection-python/script/    
-        su root
-
+	  	  
+         cd sample-facedetection-python/script/    
+         su root
+  
        执行终端命令
     
-        bash stop_presenterserver.sh   
+         bash stop_presenterserver.sh   
