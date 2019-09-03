@@ -64,12 +64,12 @@
 -   步骤 1<a name="zh-cn_topic_0167071573_fig184321447181032"></a> 运行sample-facedetection-python程序。
        进入sample-facedetection-python的script目录，切换到root用户:
 
-        cd sample-facedetection-python/script/
-        su root 
+          cd sample-facedetection-python/script/
+          su root 
 	
        然后执行命令
 	
-	bash run_facedetectionapp.sh <用户名> @ <ip>            
+          bash run_facedetectionapp.sh <用户名>@<ip>            
 	 
        用户名：开发板的登录用户名，默认为HwHiAiUser   
        ip：    开发板网口地址。采用usb网口连接时，默认地址是192.168.1.2； 网线连接时，默认地址是192.168.0.2    
