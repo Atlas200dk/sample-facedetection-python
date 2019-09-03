@@ -32,7 +32,7 @@ iptables -t nat -A POSTROUTING -o ${interface_1} -s 192.168.1.0/24 -j MASQUERADE
 iptables -A FORWARD -i ${interface_2} -o ${interface_1} -m state --state RELATED,ESTABLISHED -j ACCEPT
 iptables -A FORWARD -i ${interface_2} -o ${interface_1} -j ACCEPT
 
-host_ip=$(ifconfig | grep -w -A 2 ens35u1 | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n1)
+host_ip=$(ifconfig | grep -w -A 2 ${interface_2} | grep -o '[0-9]\+\.[0-9]\+\.[0-9]\+\.[0-9]\+' | head -n1)
 echo "======================================================="
 echo "=     Type HwHiAiUser's password on board first.      ="
 echo "=     Then type root's password on board.             ="
