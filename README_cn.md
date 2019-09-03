@@ -25,11 +25,11 @@
         Password: 
         root@mind-VirtualBox:/home/mind/sample-facedetection-python/script# 
         
-	然后样例部署命令：
+	然后执行命令：
 
 	bash deploy.sh <用户名> <ip地址> <usb网卡名> <外网名> 
 	
-	命令执行过程中按照提示即可完成deploy操作
+	即可完成样例的部署。命令执行过程中需要按照提示输入用户名密码等信息。
     
 	示例：
 
