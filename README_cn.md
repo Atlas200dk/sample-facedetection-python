@@ -17,13 +17,10 @@
 
 ## 部署<a name="zh-cn_topic_0167071573_section7994174585917"></a>
 	部署操作全部在UIHost端操作
--   步骤 1 以root用户在终端切换到sample-facedetection-python的script目录:
+-   步骤 1 进入sample-facedetection-python的script目录，切换到root用户:
 
-        mind@mind-VirtualBox:~$ cd sample-facedetection-python/script/
-        mind@mind-VirtualBox:~/sample-facedetection-python/script$ 
-        mind@mind-VirtualBox:~/sample-facedetection-python/script$ su root
-        Password: 
-        root@mind-VirtualBox:/home/mind/sample-facedetection-python/script# 
+        cd sample-facedetection-python/script/
+        su root 
         
 	然后执行命令：
 
@@ -38,12 +35,12 @@
 	
 	例如：如[图1](#zh-cn_topic_0167071573_fig184321447181017)所示，假设自己的用户用户名为HwHiAiUser,开发板ip地址为192.168.1.2,则终端命令应该写成
 
-    bash deploy.sh HwHiAiUser 192.168.1.2 ens33 ens35u1
+        bash deploy.sh HwHiAiUser 192.168.1.2 ens33 ens35u1
 
 	
--   步骤 2 启动Presenter Server。
+-   步骤 2 启动Presenter Server<a name="zh-cn_topic_0167071573_fig184321447181030"></a>
 
-	以root用户在终端切换到sample-facedetection-python目录下script目录执行Face Detection应用的Presenter Server主程序。
+	在部署脚本执行成功后，继续输入命令
 	
 	bash run_presenterserv.sh
 
@@ -58,11 +55,19 @@
 
 ## 运行
 -   步骤 1 运行sample-facedetection-python程序。
-	以root用户在UIHost端的终端切换到sample-facedetection-python/script运行应用程序。
-	bash run_facedetectionapp.sh 用户名@ip
+	进入sample-facedetection-python的script目录，切换到root用户:
 
-    注意：期间按照提示输入Host登录密码和root用户密码完成操作，如果不输入参数 用户名@ip默认为HwHiAiUser@192.168.1.2
--   步骤 2 在UIHost端使用启动Presenter Server服务时提示的URL登录 Presenter Server 网站，详细可参考部署的步骤2。
+        cd sample-facedetection-python/script/
+        su root 
+	
+	然后执行命令
+	bash run_facedetectionapp.sh <用户名>@<ip>
+        其中：
+       （1）用户名参数为开发板的登录用户名，默认为HwHiAiUser
+       （2）ip参数为开发板网口地址。采用usb网口连接时，默认地址是192.168.1.2； 网线连接时，默认地址是192.168.0.2
+	如果不输入用户名和ip参数，脚本默认采用 HwHiAiUser@192.168.1.2
+        
+-   步骤 2 登录 Presenter Server web页面。地址为启动Presenter Server服务时提示的URL，详细可参考部署的步骤2<a name="zh-cn_topic_0167071573_fig184321447181030"></a>。
 	等待Presenter Agent传输数据给服务端，单击“Refresh”刷新，当有数据时相应的Channel 的Status变成绿色，如图3.2所示。
 
 	**图 4**  Presenter Sever运行<a name="zh-cn_topic_0167071573_fig184321447181020"></a>  
@@ -70,7 +75,7 @@
 
 	Face Detection的Presenter Server最多支持10路Channel同时显示，每个 presenter_view_app_name 对应一路Channel。
 	由于硬件的限制，每一路支持的最大帧率是20fps，受限于网络带宽的影响，帧率会自动适配为较低的帧率进行展示。
--   步骤 3单击右侧对应的View Name链接，比如上图的“video”，查看结果，对于检测到的人脸，会给出置信度的标注。
+-   步骤 3 单击右侧对应的View Name链接，比如上图的“video”，查看结果，对于检测到的人脸，会给出置信度的标注。
 
 ## 后续处理
 
@@ -78,7 +83,7 @@
 
     Face Detection应用执行后会处于持续运行状态，若要停止sample-facedetection-python应用程序，在到UIHost端以root用户切换单sample-facedetection-python/script目录下执行终端命令
     
-	bash stop_facedetectionapp.sh 用户名@ip
+	bash stop_facedetectionapp.sh <用户名@ip
 
     注意：期间按照提示输入Host登录密码和root用户密码完成操作，如果不输入参数 用户名@ip默认为HwHiAiUser@192.168.1.2
 
