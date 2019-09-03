@@ -17,9 +17,19 @@
 
 ## 部署<a name="zh-cn_topic_0167071573_section7994174585917"></a>
 	部署操作全部在UIHost端操作
--   步骤 1 以root用户在终端切换到sample-facedetection-python的script目录，然后执行下列指令。
+-   步骤 1 以root用户在终端切换到sample-facedetection-python的script目录:
 
-	在终端键入bash deploy.sh 用户名 ip地址 usb网卡名 外网名 按照提示即可完成deploy操作
+        mind@mind-VirtualBox:~$ cd sample-facedetection-python/script/
+        mind@mind-VirtualBox:~/sample-facedetection-python/script$ 
+        mind@mind-VirtualBox:~/sample-facedetection-python/script$ su root
+        Password: 
+        root@mind-VirtualBox:/home/mind/sample-facedetection-python/script# 
+        
+	然后样例部署命令：
+
+	bash deploy.sh <用户名> <ip地址> <usb网卡名> <外网名> 
+	
+	命令执行过程中按照提示即可完成deploy操作
     
 	示例：
 
