@@ -1,6 +1,6 @@
+#!/usr/bin/bash
 . ./deploy/copy.sh
 . ./deploy/network.sh
-. ./deploy/install_host.sh
 
 
 if [ $# != 4 ] ;then
@@ -10,5 +10,5 @@ fi
 cd deploy
 copy $@
 network $@
-install $@
+
 

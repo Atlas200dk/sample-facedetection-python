@@ -19,12 +19,7 @@ echo "numpy install success!"
 else
 echo "numpy already exist or install failed!"
 fi
-sudo apt install expect
-if [ $? == "0" ] ;then
-echo "expect install success!"
-else
-echo "expect already exist or install failed!"
-fi
+
 
 host_ip=$(ifconfig | grep -o '192\.168\.1\.[0-9]\+' | head -n1)
 if [ -z "$host_ip" ] ;then
@@ -38,8 +33,7 @@ serverConfigFile="../../presenterserver/face_detection/config/config.conf"
 modelFile="../../facedetectionapp/graph.config.model"
 serverModelFile="../../presenterserver/face_detection/config/config.conf.model"
 installdir="../../install"
-networkModelFile="../../install/network.sh.model"
-networkConfigFile="../../install/network.sh"
+
 if [ -f "$configFile" ]; then
   rm -f $configFile
 fi
@@ -49,7 +43,7 @@ if [ -f "$serverConfigFile" ]; then
 fi
 sed "s/192.168.1.166/${host_ip}/" ${modelFile}>$configFile
 sed "s/192.168.1.166/${host_ip}/" ${serverModelFile}>$serverConfigFile
-sed "s/192.168.1.166/${host_ip}/" ${networkModelFile}>$networkConfigFile
+
 echo "config has been finished"
 echo "please input password for deploy code"
 scp -r ../../../sample-facedetection-python/ $1@$2:/home/$1/ >/dev/null

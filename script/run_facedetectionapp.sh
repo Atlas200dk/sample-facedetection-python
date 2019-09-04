@@ -9,7 +9,7 @@ echo -----------------------------------------
 echo -"input the login board password"       -
 echo -----------------------------------------
 
-ssh -t ${username} "cd /home/HwHiAiUser/sample-facedetection-python/facedetectionapp; python main.py"
+ssh -t ${username} "cd /home/HwHiAiUser/sample-facedetection-python/facedetectionapp; bash run_agent.sh ${username%@*}"
 
 
 

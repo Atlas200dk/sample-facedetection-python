@@ -37,7 +37,8 @@ echo "======================================================="
 echo "=     Type HwHiAiUser's password on board first.      ="
 echo "=     Then type root's password on board.             ="
 echo "======================================================="
-ssh -t HwHiAiUser@${board_ip} "su - root -c \"ip route change default via ${host_ip} dev usb0; echo 'nameserver 114.114.114.114' > /etc/resolvconf/resolv.conf.d/base;resolvconf -u;apt-get update;apt-get upgrade;apt-get install python-dev\""
+ssh -t HwHiAiUser@${board_ip} "su - root -c \"ip route change default via ${host_ip} dev usb0; echo 'nameserver 114.114.114.114' > /etc/resolvconf/resolv.conf.d/base;resolvconf -u;apt-get update;apt-get upgrade;apt-get install python-dev;cd /home/$1/sample-facedetection-python/install; bash install.sh $1\""
+
 return 0
 
 }
