@@ -31,7 +31,8 @@
 	
 	install.sh脚本执行的操作有：
 	
-	1.安装presenterserver依赖的python包；
+	1.安装presenterserver依赖的python包；    
+	
 	2.配置开发板和Ubuntu服务器网络，使开发板可以连接internet；Ubuntu服务器和开发板网络配置都需要在root账户下执行，所以需要用户需要在Ubuntu服务器上切换到root账户执行install.sh脚本。并且在开发板侧install.sh脚本也会切换到root账户执行配置命令，切换时需要用户输入开发板root账户密码，默认密码为"Mind@123"；   
 	
 	3.升级和更新开发板的linux系统。为了安装依赖的python包，install.sh脚本会自动在开发板上执行命令apt-get update和apt-get upgrade。根据网络以及开发板是否已经执行过更新等状况，该步骤的执行时间可能会超过20分钟，并且期间安装询问交互，选Y即可；
