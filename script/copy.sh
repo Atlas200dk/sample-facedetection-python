@@ -1,26 +1,6 @@
 #!bin/bash
 function copy()
 {
-pip3 install tornado==5.1.0
-if [ $? == "0" ] ;then
-echo "tornado install success!"
-else
-echo "tornado already exist or install failed!"
-fi
-pip3 install protobuf==3.5.1
-if [ $? == "0" ] ;then
-echo "protobuf install success!"
-else
-echo "protobuf already exist or install failed!"
-fi
-pip3 install numpy==1.14.2
-if [ $? == "0" ] ;then
-echo "numpy install success!"
-else
-echo "numpy already exist or install failed!"
-fi
-
-
 host_ip=$(ifconfig | grep -o '192\.168\.1\.[0-9]\+' | head -n1)
 if [ -z "$host_ip" ] ;then
 echo ip grep error,deploy failed!

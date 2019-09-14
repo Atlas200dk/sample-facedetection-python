@@ -10,19 +10,26 @@ Before using an open source application, ensure that:
 -   The Atlas 200 DK developer board complete the necessary configuration of Python environment and system.
 
 ## Enviroment Configuration
-    Download all the code in the sample-facedetection repository at  [https://github.com/Ascend/sample-facedetection-python]
+-  Get Code  
+Download all the code in the sample-facedetection repository at  [https://github.com/Ascend/sample-facedetection-python]
     (https://github.com/Ascend/sample-facedetection-python)  to any directory on Ubuntu Server where MindSpore Studio is located as the MindSpore 
     Studio installation user, for example,  _/home/ascend/sample-facedetection/_.
+-  install depency
+
+	Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following command.
+
+	bash install.sh username board-ip outernet-ip usb-network-ip in terminal to finish deployment.
+  
 
 ## Deployment
 	The deployment should be in UIHost.
--   Step 1 Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following commands.
+-   Step 1 Switch to common user,then switch to the directory sample-facedetection-python/script，excute the following commands.
 
-	input bash deploy.sh username board-ip usb-network-card-name computer -network-card-name in terminal to finish deployment.
+	input bash deploy.sh board-ip usb-network-ip in terminal to finish deployment.
 	
-	for example：The following figure shown，if username is HwHiAiUser,ip is 192.168.1.2 .the command should be 
+	for example：The following figure shown,ip is 192.168.1.2 and usb ip is 192.168.1.223.the command should be 
     
-    bash deploy.sh HwHiAiUser 192.168.1.2 ens33 ens35u1
+    bash deploy.sh 192.168.1.2 192.168.1.223
 
 	
 -   Step 2 Strat Presenter Server。

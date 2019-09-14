@@ -1,3 +1,5 @@
+#!bin/bash
+. ./status.sh
 function installall()
 {
 dir=`ls ./` #定义遍历的目录
@@ -5,6 +7,11 @@ dir=`ls ./` #定义遍历的目录
  do
  extension="${i##*.}"
      if [ "$extension" = "gz" ] ;then
+        getinstallstatus ${i%-*}
+        if [ $? == 0 ] ;then
+        echo "${i%-*} had installed,skip it!"
+        continue
+        fi
         echo "${i} is installing"
         filename=${i%.tar*}
         echo "filename:${filename}"
@@ -25,6 +32,11 @@ dir=`ls ./` #定义遍历的目录
         fi
         
      elif [ "$extension" = "zip" -a "$i" != "setuptools-41.2.0.zip" ] ;then
+        getinstallstatus ${i%%[3|-]*}
+        if [ $? == 0 ] ;then
+        echo "${i%-*} already installed,skip it"
+        continue
+        fi
          echo "${i} is installing"
         filename=${i%.*}
         echo "filename:${filename}"
