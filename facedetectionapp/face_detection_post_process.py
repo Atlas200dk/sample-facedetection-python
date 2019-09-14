@@ -74,10 +74,10 @@ kFaceLabelTextSuffix = '%'
 
 class FaceDetectPostConfig:
     def __init__(self):
-        self.confidene = None
-        self.presenterIp = None
-        self.presentPort = None
-        self.channelName = None
+        self.confidence = None     #The confidence of face detection
+        self.presenterIp = None    #The presenter server ip
+        self.presentPort = None    #The presenter server port
+        self.channelName = None    #The presenter server channel, default is vedio
 
 class FaceDetectionPostProcess(AppEngine):
     def __init__(self, aiConfig):
@@ -91,6 +91,7 @@ class FaceDetectionPostProcess(AppEngine):
         print("Create post process engine success")
 
     def ParseConfig(self, aiConfig):
+        #Get config from graph.config
         for item in aiConfig._ai_config_item:
             if item._AIConfigItem__name == "Confidence":
                 self.config.confidence = float(item._AIConfigItem__value)
@@ -100,7 +101,8 @@ class FaceDetectionPostProcess(AppEngine):
                 self.config.presenterPort = int(item._AIConfigItem__value)
             if item._AIConfigItem__name == "ChannelName":
                 self.config.channelName = item._AIConfigItem__value
-
+    
+    #Create link socket with presenter server
     def OpenChannel(self):
         openchannelparam = OpenChannelParam()
         openchannelparam.host_ip = self.config.presenterIp
@@ -108,29 +110,31 @@ class FaceDetectionPostProcess(AppEngine):
         openchannelparam.channel_name = self.config.channelName
         openchannelparam.content_type = 1
         return OpenChannel(openchannelparam)
-
+ 
     def IsInvalidConfidence(self, confidence):
         return (confidence <= kConfidenceMin) or (confidence > kConfidenceMax)
 
     def IsInvalidResults(self, attr, score, point_lt, point_rb):
         if abs(attr - kAttributeFaceLabelValue) > kAttributeFaceDeviation:
             return True
-
+        #Face detection confidence too low
         if (score < self.config.confidence or self.IsInvalidConfidence(score)) :
 	        return True
-
+            
+        #Face rectangle in the image is invalid
         if (point_lt.x == point_rb.x) and (point_lt.y == point_rb.y):
             return True
         return False
 
+    #When inference failed, we just send origin jpeg image to presenter server to display
     def HandleOriginalImage(self, inference_res):
         imgParam = inference_res.imageParamList[0]
         
         ret = SendImage(self.channel, imgParam.imageId, imgParam.imageData, [])
         if ret != HIAI_APP_OK:
             print("Send image failed, return ")
-
-
+  
+    #Parse the face detection confidence and face position in the image from inference result
     def HandleResults(self, inferenceData):
         jpegImageParam = inferenceData.imageParamList[0]
         inferenceResult = inferenceData.outputData[0][0]
@@ -143,8 +147,9 @@ class FaceDetectionPostProcess(AppEngine):
                 for k in range(0, inferenceResult.shape[2]):
                     result = inferenceResult[i][j][k]
                     attr = result[kAttributeIndex]
-                    score = result[kScoreIndex]
-
+                    score = result[kScoreIndex] #face detection confidence
+                    
+                    #Get the face position in the image
                     one_result = DetectionResult()
                     one_result.lt.x = result[kAnchorLeftTopAxisIndexX] * widthWithScale
                     one_result.lt.y = result[kAnchorLeftTopAxisIndexY] * heightWithScale
@@ -156,15 +161,16 @@ class FaceDetectionPostProcess(AppEngine):
                           score, one_result.lt.x, one_result.lt.y,one_result.rb.x, one_result.rb.y)
 
                     score_percent = score * kScorePercent
+                    #Construct the face detection confidence string
                     one_result.result_text = kFaceLabelTextPrefix + str(score_percent) + kFaceLabelTextSuffix
                     detectionResults.append(one_result)
-
+        #Send the face position, confidence string and image to presenter server
         ret = SendImage(self.channel, jpegImageParam.imageId, jpegImageParam.imageData, detectionResults)
         if ret != HIAI_APP_OK:
             print("Post process engine send image failed")
 
         return True
-
+    #The post process engine Entry
     def Process(self, data):
         start = datetime.now()
 

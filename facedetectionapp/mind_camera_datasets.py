@@ -82,7 +82,7 @@ class MindCameraDatasets(AppEngine):
                  "YUV420SP": CameraImageFormat.CAMERA_IMAGE_YUV420_SP.value}
 
         self.config = CameraDatasetsConfig()
-
+        #get camera configuration from graph.config
         for item in aiConfig._ai_config_item:
             if item._AIConfigItem__name == "fps":
                 self.config.fps = int(item._AIConfigItem__value)
@@ -107,7 +107,8 @@ class MindCameraDatasets(AppEngine):
             ret = HIAI_APP_ERROR
 
         return ret
-
+    
+    #The camera engine Entry
     def Process(self, data):
         print("Camera engine recv msg: ", data)
         self.DoCapProcess()        
@@ -118,22 +119,26 @@ class MindCameraDatasets(AppEngine):
 
  
     def DoCapProcess(self):
+        #open the camera end set camera property
         if HIAI_APP_OK != self.PreCapProcess():
             CloseCamera(self.config.cameraId)
             raise Exception("Pre process camera failed")
             
         SetExitFlag(False)
         print("start get frame from camera, exitflag is ", GetExitFlag())
+        #The loop of get image from camera
         while GetExitFlag() == False:
+            #create the object instance 
             imagePatch = BatchImageParamWithScale(self.config.frameId, self.config.cameraId,
                                                  self.config.resolution.width, self.config.resolution.height,
                                                  YuvImageSize(self.config.resolution))
             imageParam = imagePatch.imageList[0]
+            #get the image from camera
             ret = ReadFrameFromCamera(self.config.cameraId, imageParam)
             if ret == 0:
                 print("Read frame from camera failed")
                 continue
-
+            #send image data to inference engine
             SendData("BatchImageParamWithScale", imagePatch)
             self.config.frameId += 1
         CloseCamera(self.config.cameraId)

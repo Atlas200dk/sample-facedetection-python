@@ -52,6 +52,7 @@ kModelHeight = 300  # face detection model input height
 class FaceDetectionInference(AppEngine):
     def __init__(self, aiConfig):
         for item in aiConfig._ai_config_item:
+            #get model path configuration from graph.config  
             if item._AIConfigItem__name == "model_path":
                 self.modelPath = item._AIConfigItem__value
                 print("model: ", self.modelPath)
@@ -59,9 +60,12 @@ class FaceDetectionInference(AppEngine):
                     raise Exception("Model file %s is not exist!"%(self.modelPath))
                 break
         self.aiConfig = aiConfig
+        #aligned flag is True, because for when transform the face detection caffe model to D model, we turn on AIPP
         self.isAligned = True
         self.first = True
 
+    #Resize image from camera. when self.isAligned is true, the size of resize image is 384*304,
+    #for width align with 128, height align with 16
     def ResizeImageOfFrame(self, srcFrame):
         resizedImgList = []
         for i in range(0, srcFrame.batchInfo.batchSize):
@@ -72,6 +76,7 @@ class FaceDetectionInference(AppEngine):
                 return HIAI_APP_ERROR
 
             resizedImg = ImageData()
+            #model resolution, not image resolution
             modeResolution = Resolution(kModelWidth, kModelHeight)
             ret = ResizeImage(resizedImg, srcImgParam, modeResolution, self.isAligned)
             if ret != HIAI_APP_OK:
@@ -79,7 +84,8 @@ class FaceDetectionInference(AppEngine):
                 continue
             resizedImgList.append(resizedImg)
         return resizedImgList
-
+    
+    #Convert the image(YUV) from camera to jpeg
     def ConvImageOfFrameToJpeg(self, srcFrame):
         jpegImgParamList = []
         for i in range(0, srcFrame.batchInfo.batchSize):
@@ -98,7 +104,8 @@ class FaceDetectionInference(AppEngine):
             jpegImgParamList.append(jpegImgParam)
 
         return HIAI_APP_OK, jpegImgParamList
-
+    
+    #Inference the image
     def ExcuteInference(self, images):
         result = []
         for i in range(0, len(images)):
@@ -137,14 +144,17 @@ class FaceDetectionInference(AppEngine):
             print("Inference result: ", resTensorList[0].shape)
             result.append(resTensorList)
         return HIAI_APP_OK, result
-
+    
+    #The inference engine Entry
     def Process(self, data):
         if GetExitFlag() == True:
             print("Inference engine exit for exit flag be set")
             sys.exit(0)
 
         start = datetime.now()
+        #Resize the image for inference
         resizedImgList = self.ResizeImageOfFrame(data)
+        #Transform the image from camera to jpeg for presenter server display
         ret, jpegImgList = self.ConvImageOfFrameToJpeg(data)
         if ret != HIAI_APP_OK:
             raise Exception("Convert yuv image to jpeg failed")
@@ -152,20 +162,24 @@ class FaceDetectionInference(AppEngine):
         end = datetime.now() - start
         print("Image process  exhoust ", end.total_seconds())
         start - datetime.now()
-
+        
+        #The data send to post process engine
         transData = EngineTrans()
-        transData.imageParamList = jpegImgList
+        transData.imageParamList = jpegImgList  #Image for persenter server to display
         transData.batchInfo = data.batchInfo
         transData.widthScale, transData.heightScale = AlignUpScaleRatio(kModelWidth, kModelHeight, self.isAligned)
-
+        #Inference and detect face
         ret, outputTensorList = self.ExcuteInference(resizedImgList)
         if ret == HIAI_APP_OK:
+            #Inference success
             transData.status = True
             transData.outputData = outputTensorList
         else:
+            #Inference failed
             transData.status = False
             transData.msg = "HiAIInference Engine Process failed"
             print("Model inference return error")
+        #Send inference data and jpeg image to post process engine
         SendData("EngineTrans", transData)
         end = datetime.now() - start
         print("model inference  exhoust ", end.total_seconds())
