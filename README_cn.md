@@ -33,7 +33,7 @@
 	
 	1.安装presenterserver依赖的python包；    
 	
-	2.配置开发板和Ubuntu服务器网络，使开发板可以连接internet；Ubuntu服务器和开发板网络配置都需要在root账户下执行，所以需要用户需要在Ubuntu服务器上切换到root账户执行install.sh脚本。并且在开发板侧install.sh脚本也会切换到root账户执行配置命令，切换时需要用户输入开发板root账户密码，默认密码为"Mind@123"；   
+	2.配置开发板和Ubuntu服务器网络，使开发板可以连接internet。Ubuntu服务器和开发板网络配置都需要在root账户下执行，所以在Ubuntu服务器上要切换到root账户执行install.sh脚本。并且在开发板侧install.sh脚本也会切换到root账户执行配置命令，切换时会提示用户输入开发板root账户密码，默认密码为"Mind@123"；   
 	
 	3.升级和更新开发板的linux系统。为了安装依赖的python包，install.sh脚本会自动在开发板上执行命令apt-get update和apt-get upgrade。根据网络以及开发板是否已经执行过更新等状况，该步骤的执行时间可能会超过20分钟，并且期间安装询问交互，选Y即可；
 	
@@ -55,7 +55,7 @@
 	bash deploy.sh <开发板ip地址> <内网ip>  
    
 	开发板ip地址：  开发板网口地址。使用usb连接时默认为192.168.1.2, 使用网线连接时默认为192.168.0.2          
-    内网ip：UIHost上和开发板连接的网口名。在UIHost上使用ifconfig可以查看  
+        内网ip：UIHost上和开发板连接的网口名。在UIHost上使用ifconfig可以查看  
 	  
 	注意：部署操作是将Face Detection样例代码拷贝到Atlas开发板。scp拷贝需要用户输入ssh登录密码，所以脚本执行过程中会提示输入密码，默认为Mind@123    
        
