@@ -50,7 +50,7 @@ if __name__ == "__main__":
         print("Get camera engine configuration failed!")
         sys.exit(0)
     cameraEngine = datasetengine.MindCameraDatasets(cameraConfig.ai_config)
-    cameraEngine.SubscribleMsg(['start', ])
+    cameraEngine.SubscribleMsg(['string', ])
     engineList.append(cameraEngine)
 
     #3.获取配置文件graph.config中的inference engine配置并创建engine
@@ -72,7 +72,7 @@ if __name__ == "__main__":
     engineList.append(postEngine)
 
     faceDetectGraph.StartupEngines(engineList)
-    SendData('start', 'start work')
+    SendData('string', 'start work')
 
     while True:
         time.sleep(20)
