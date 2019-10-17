@@ -1,33 +1,63 @@
 EN|[CN](README_cn.md)
 
 Developers can deploy the application on the Atlas 200 DK to collect camera data in real time and predict facial information in the video.
+Note:uihost refers to the Ubuntu PC server; host refers to altas200dk development board; device refers to ascend310 chip
 
 ## Prerequisites
 
 Before using an open source application, ensure that:
 
--   The Atlas 200 DK developer board version must be 887 at least and the board should connect camra with Channel1.
--   The Atlas 200 DK developer board complete the necessary configuration of Python environment and system.
+-   The Atlas 200 DK developer board version must be 887 at least 
+-   The board should connect camra with CAMERA0
+-   Login the development board through the Ubuntu server SSH is avaliable
+-   The Atlas 200 DK developer board complete the necessary configuration of Python environment and system
 
 ## Enviroment Configuration
 -  Get Code  
 Download all the code in the sample-facedetection repository at  [https://github.com/Ascend/sample-facedetection-python]
-    (https://github.com/Ascend/sample-facedetection-python)  to any directory on Ubuntu Server where MindSpore Studio is located as the MindSpore 
-    Studio installation user, for example,  _/home/ascend/sample-facedetection/_.
+    (https://github.com/Ascend/sample-facedetection-python)  to any directory on Ubuntu PC Server, for example,  _/home/ascend/sample-facedetection/_.
 -  install depency
 
-	Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following command.
+	Switch to root user,enter the directory sample-facedetection-python/script，excute the following command:
 
-	bash install.sh username board-ip outernet-ip usb-network-ip in terminal to finish deployment.
+	bash install.sh <board-ip> <internet-ip> <usb-network-ip>
+	
+	board-ip: the developer board ip. The default ip is 192.168.1.2 when connect with usb
+	
+	insternet-ip: the Ubuntu PC server ip which link to internet
+	
+	usb-network-ip: the Ubuntu PC server ip which link to developer board
+	
+	The install.sh script performs the following operations:
+	
+	1. Install the python package dependency of the presenter server
+	
+	2. Configure the developer board and Ubuntu pc server network so that the developer board can connect to the Internet. Both the Ubuntu pc server and the developer board network configuration need to be executed as root user, so you need to switch to the root account on the Ubuntu pc server to execute the install.sh script. In addition, the install.sh script on the developer board will also switch to the root account to execute the configuration command. When switching, the user will be prompted to enter the root account password of the developer board. The default password is "mind @ 123";
+	
+	3. Upgrade and update the Linux system of the developer board. In order to install the Python package dependency in developer board, the install.sh script will automatically execute the commands "apt-get update" and "apt-get upgrade" on the development board. According to the status of the network and the developer board, such as whether the update has been executed, the execution time of this step may exceed 20 minutes. During the installation, if arise query or interact, select y or default
+	
+	4.Install the model inference Python package hiai, and it's Python packages dependency such as Python-dev, numpy, Pip, esasy_install, enum34, funcsigns, future. Because numpy is compiled and installed in a long time, the installation time will be more than 10 minutes. During the installation process, there will be installation query interaction. Enter y
+	
+	Note: the installation environment only needs to be executed in the following two scenarios: 
+	
+	(1) Running the face detection sample for the first time; 
+	
+	(2) Running the face detection sample after upgrading the developer board with make startup card afresh.
+	
+	You do not need to perform after a successful installation
   
 
 ## Deployment
 	The deployment should be in UIHost.
--   Step 1 Switch to common user,then switch to the directory sample-facedetection-python/script，excute the following commands.
+-   Step 1 Switch to normal user,then switch to the directory sample-facedetection-python/script，excute the following commands:
 
-	input bash deploy.sh board-ip usb-network-ip in terminal to finish deployment.
+	bash deploy.sh <board-ip> <usb-network-ip> 
 	
-	for example：The following figure shown,ip is 192.168.1.2 and usb ip is 192.168.1.223.the command should be 
+	board-ip: the developer board ip which link to Ubuntu PC server
+	
+	usb-network-ip: the Ubuntu Pc server ip which link to developer board
+	
+	for example：The following figure shown,ip is 192.168.1.2 and usb network ip is 192.168.1.223.the command should be 
     
     bash deploy.sh 192.168.1.2 192.168.1.223
 
