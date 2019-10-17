@@ -47,8 +47,8 @@ Download all the code in the sample-facedetection repository at https://github.c
   
 
 ## Deployment
-	The deployment should be in UIHost.
--   Step 1 Switch to normal user,then switch to the directory sample-facedetection-python/script，excute the following commands:
+	
+-   Step 1 Switch to normal user,enter to the directory sample-facedetection-python/script，excute the following commands:
 
 	bash deploy.sh board-ip usb-network-ip 
 	
@@ -56,9 +56,19 @@ Download all the code in the sample-facedetection repository at https://github.c
 	
 	usb-network-ip: the Ubuntu Pc server ip that link to developer board
 	
+	Note: the deployment is to copy the face detection sample code to the atlas developer board by scp command, so requires the user to enter the SSH password. The script will prompt for the password during execution. The default value is mind @ 123.
+	
 	for example：The following figure shown,ip is 192.168.1.2 and usb network ip is 192.168.1.223.the command should be 
+	
+	**figure 1**  network configuration<a name="zh-cn_topic_0167071573_fig184321447181017"></a>  
+	![](doc/source/img/ifconfig.png "网口配置图")
+	
+	For example：[figure 1](#zh-cn_topic_0167071573_fig184321447181017)，suppose the username is HwHiAiUser,the developer board ip is 192.168.1.2,then the command is:
+
+        bash deploy.sh 192.168.1.2 192.168.1.223
     
-    bash deploy.sh 192.168.1.2 192.168.1.223
+    
+    
 
 	
 -   Step 2 Strat Presenter Server。
