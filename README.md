@@ -73,16 +73,18 @@ Download all the code in the sample-facedetection repository at https://github.c
 	
 -   Step 2 Strat Presenter Server。
 
-	Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following commands to run the presenter server
+	After deploy sample succeed, execute command:
 	
 	bash run_presenterserv.sh
 
-	**figure 1**  Start Presenter Server  
-	Use the URL shown in the preceding figure to log in to Presenter Server \( only the Chrome browser is supporte \). The IP address is 
-	that entered in  [Figure 3](#en-us_topic_0167089636_fig64391558352)  and the default port number is  **7007**. The following figure 
-	indicates that Presenter Server is started successfully.
+	**figure 2**  Start Presenter Server<a name="zh-cn_topic_0167071573_fig184321447181018"></a>  
+	![figure 2](doc/source/img/PresenterServerStartup.png "Presenter Server进程启动")  
+	Use the URL shown in the [figure 2](#zh-cn_topic_0167071573_fig184321447181018) to login Presenter Server \( only the Chrome browser is supporte \). The IP address is that entered in [figure 2](#zh-cn_topic_0167071573_fig184321447181018) , and the default port number is 7007.
+	
+	The following figure 3<a name="zh-cn_topic_0167071573_fig184321447181019"></a>  indicates that Presenter Server is started successfully.
 
-	**figure 2**  HomePage for Presenter Server
+	**figure 3**  Web page for Presenter Server<a name="zh-cn_topic_0167071573_fig184321447181019"></a>  
+	![](doc/source/img/PresenterServerWeb.png "Presenter Server页面") 
       
 
 ## Running
