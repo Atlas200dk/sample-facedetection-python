@@ -23,7 +23,7 @@ Download all the code in the sample-facedetection repository at https://github.c
 	
 	board-ip: the developer board ip. The default ip is 192.168.1.2 when connect with usb
 	
-	insternet-ip: the Ubuntu PC server ip which link to internet
+	internet-ip: the Ubuntu PC server ip which link to internet
 	
 	usb-network-ip: the Ubuntu PC server ip which link to developer board
 	
