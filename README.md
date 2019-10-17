@@ -88,12 +88,16 @@ Download all the code in the sample-facedetection repository at https://github.c
       
 
 ## Running
--   Step 1 Run sample-facedetection-python application。
-	Switch to root user,then switch to the directory sample-facedetection-python/script，excute the following commands to run the application
+-   Step 1<a name="zh-cn_topic_0167071573_fig184321447181032"></a>  Run sample-facedetection-python application。
+	In Ubuntu PC server, switch to root user,enter to the directory sample-facedetection-python/script，excute the following commands to run the application:
 
-	bash run_facedetectionapp.sh username@ip
+	bash run_facedetectionapp.sh board_username@board_ip
+	
+	board_username:the SSH login username of developer board, default: HwHiAiUser
+	
+	board_ip:the ip of developer board, the default ip is 192.168.1.2 when connect with usb, and 192.168.0.2 when connect with net
     
-    Tips:running the shell need to input password twice.first time ,the password is the username's password,the second ,the password is the root user's password.if paramter not given,the default is HwHiAiUser@192.168.1.2
+    Tips:if paramter not given,the script will use the default parameter HwHiAiUser@192.168.1.2
 
 -   Step 2 Use the URL that is displayed when you start the Presenter Server service to log in to the Presenter Server website. For details, see the Deployment Step 2
 	Wait for Presenter Agent to transmit data to the server. Click  **Refresh**. When there is data, the icon in the  **Status**  column for the corresponding channel changes to green, as shown in following figure.
