@@ -99,14 +99,13 @@ Download all the code in the sample-facedetection repository at https://github.c
     
     Tips:if paramter not given,the script will use the default parameter HwHiAiUser@192.168.1.2
 
--   Step 2 Use the URL that is displayed when you start the Presenter Server service to log in to the Presenter Server website. For details, see the Deployment Step 2
-	Wait for Presenter Agent to transmit data to the server. Click  **Refresh**. When there is data, the icon in the  **Status**  column for the corresponding channel changes to green, as shown in following figure.
+-   Step 2 Login Presenter Server web page.Use the URL that is displayed when you start the Presenter Server. For details, see the Deployment Step [2](#zh-cn_topic_0167071573_fig184321447181030)
+	Wait for Presenter Agent to transmit data to the server. Click  **Refresh**. When there is data, the icon in the  **Status**  column for the corresponding channel changes to green, as shown in figure 4.
 
-	**figure 3**  Presenter Sever Interface
+	**figure 4**  Presenter Sever Interface<a name="zh-cn_topic_0167071573_fig184321447181020"></a>  
+    ![](doc/source/img/PresenterServerRun.png "Presenter Server运行.png") 
 
-
-    >-   The Presenter Server of the face detection application supports a maximum of 10 channels at the same time , each  presenter\_view\_app\_name  parameter corresponds to a channel.  
-    >-   Due to hardware limitations, the maximum frame rate supported by each channel is 20fps,  a lower frame rate is automatically used when the network bandwidth is low.  
+    
 -   Step 3 Click  **image**  or  **video**  in the  **View Name**  column and view the result. The confidence of the detected face is marked.
 
 ## Follow-up Operations
