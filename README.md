@@ -23,9 +23,9 @@ Download all the code in the sample-facedetection repository at https://github.c
 	
 	board-ip: the developer board ip. The default ip is 192.168.1.2 when connect with usb
 	
-	internet-ip: the Ubuntu PC server ip which link to internet
+	internet-ip: the Ubuntu PC server ip that link to internet
 	
-	usb-network-ip: the Ubuntu PC server ip which link to developer board
+	usb-network-ip: the Ubuntu PC server ip that link to developer board
 	
 	The install.sh script performs the following operations:
 	
@@ -52,9 +52,9 @@ Download all the code in the sample-facedetection repository at https://github.c
 
 	bash deploy.sh board-ip usb-network-ip 
 	
-	board-ip: the developer board ip which link to Ubuntu PC server
+	board-ip: the developer board ip that link to Ubuntu PC server
 	
-	usb-network-ip: the Ubuntu Pc server ip which link to developer board
+	usb-network-ip: the Ubuntu Pc server ip that link to developer board
 	
 	for example：The following figure shown,ip is 192.168.1.2 and usb network ip is 192.168.1.223.the command should be 
     
