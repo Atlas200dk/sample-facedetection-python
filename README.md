@@ -14,13 +14,12 @@ Before using an open source application, ensure that:
 
 ## Enviroment Configuration
 -  Get Code  
-Download all the code in the sample-facedetection repository at  [https://github.com/Ascend/sample-facedetection-python]
-    (https://github.com/Ascend/sample-facedetection-python)  to any directory on Ubuntu PC Server, for example,  _/home/ascend/sample-facedetection/_.
--  install dependency
+Download all the code in the sample-facedetection repository at https://github.com/Ascend/sample-facedetection-python  to any directory on Ubuntu PC Server, for example,  _/home/ascend/sample-facedetection/_.
+-  Install dependency
 
 	Switch to root user,enter the directory sample-facedetection-python/script，excute the following command:
 
-	bash install.sh <board-ip> <internet-ip> <usb-network-ip>
+	bash install.sh board-ip internet-ip usb-network-ip
 	
 	board-ip: the developer board ip. The default ip is 192.168.1.2 when connect with usb
 	
@@ -30,11 +29,11 @@ Download all the code in the sample-facedetection repository at  [https://github
 	
 	The install.sh script performs the following operations:
 	
-	1. Install the python package dependency of the presenter server
+	1.Install the python package dependency of the presenter server
 	
-	2. Configure the developer board and Ubuntu pc server network so that the developer board can connect to the Internet. Both the Ubuntu pc server and the developer board network configuration need to be executed as root user, so you need to switch to the root account on the Ubuntu pc server to execute the install.sh script. In addition, the install.sh script on the developer board will also switch to the root account to execute the configuration command. When switching, the user will be prompted to enter the root account password of the developer board. The default password is "mind @ 123";
+	2.Configure the developer board and Ubuntu pc server network so that the developer board can connect to the Internet. Both the Ubuntu pc server and the developer board network configuration need to be executed as root user, so you need to switch to the root account on the Ubuntu pc server to execute the install.sh script. In addition, the install.sh script on the developer board will also switch to the root account to execute the configuration command. When switching, the user will be prompted to enter the root account password of the developer board. The default password is "mind @ 123";
 	
-	3. Upgrade and update the Linux system of the developer board. In order to install the Python package dependency in developer board, the install.sh script will automatically execute the commands "apt-get update" and "apt-get upgrade" on the development board. According to the status of the network and the developer board, such as whether the update has been executed, the execution time of this step may exceed 20 minutes. During the installation, if arise query or interact, select y or default
+	3.Upgrade and update the Linux system of the developer board. In order to install the Python package dependency in developer board, the install.sh script will automatically execute the commands "apt-get update" and "apt-get upgrade" on the development board. According to the status of the network and the developer board, such as whether the update has been executed, the execution time of this step may exceed 20 minutes. During the installation, if arise query or interact, select y or default
 	
 	4.Install the model inference Python package hiai, and it's Python packages dependency such as Python-dev, numpy, Pip, esasy_install, enum34, funcsigns, future. Because numpy is compiled and installed in a long time, the installation time will be more than 10 minutes. During the installation process, there will be installation query interaction. Enter y
 	
@@ -51,7 +50,7 @@ Download all the code in the sample-facedetection repository at  [https://github
 	The deployment should be in UIHost.
 -   Step 1 Switch to normal user,then switch to the directory sample-facedetection-python/script，excute the following commands:
 
-	bash deploy.sh <board-ip> <usb-network-ip> 
+	bash deploy.sh board-ip usb-network-ip 
 	
 	board-ip: the developer board ip which link to Ubuntu PC server
 	
