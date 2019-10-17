@@ -16,7 +16,7 @@ Before using an open source application, ensure that:
 -  Get Code  
 Download all the code in the sample-facedetection repository at  [https://github.com/Ascend/sample-facedetection-python]
     (https://github.com/Ascend/sample-facedetection-python)  to any directory on Ubuntu PC Server, for example,  _/home/ascend/sample-facedetection/_.
--  install depency
+-  install dependency
 
 	Switch to root user,enter the directory sample-facedetection-python/script，excute the following command:
 
