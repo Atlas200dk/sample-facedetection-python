@@ -27,8 +27,8 @@
 	bash install.sh <开发板ip地址> <外网ip> <内网ip> 
     
 	开发板ip地址：  开发板网口地址。使用usb连接时默认为192.168.1.2, 使用网线连接时默认为192.168.0.2     
-    外网ip：UIHost连接Internet的网口名     
-    内网ip：UIHost上和开发板连接的网口名。在UIHost上使用ifconfig可以查看  
+    外网ip：UIHost连接Internet的网口IP     
+    内网ip：UIHost上和开发板连接的网口IP。在UIHost上使用ifconfig可以查看  
 	
 	install.sh脚本执行的操作有：
 	
@@ -97,7 +97,7 @@
        如果不输入用户名和host_ip参数，命令脚本默认采用 HwHiAiUser@192.168.1.2    
         
 -   步骤 2 登录 Presenter Server web页面。地址为启动Presenter Server服务时提示的URL，详细可参考部署的步骤[2](#zh-cn_topic_0167071573_fig184321447181030)。    
-	等待Presenter Agent传输数据给服务端，单击“Refresh”刷新，当有数据时相应的Channel 的Status变成绿色，如图4所示。
+	等待Presenter Agent传输数据给服务端，单击“Refresh”刷新，当有数据时相应的Channel 的Status变FaceRegisterData成绿色，如图4所示。
 
 	**图 4**  Presenter Sever运行<a name="zh-cn_topic_0167071573_fig184321447181020"></a>  
     ![](doc/source/img/PresenterServerRun.png "Presenter Server运行.png")  
