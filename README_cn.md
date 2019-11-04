@@ -75,7 +75,7 @@
 
 	在部署脚本执行成功后，继续输入命令
 	
-	bash run_presenterserv.sh
+	bash run_presenterserv.sh &
 
 	**图 2**  Presenter Server进程启动<a name="zh-cn_topic_0167071573_fig184321447181018"></a>  
 	![](doc/source/img/PresenterServerStartup.png "Presenter Server进程启动")  
