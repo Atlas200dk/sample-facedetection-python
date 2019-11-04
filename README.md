@@ -77,7 +77,7 @@ Download all the code in the sample-facedetection repository at https://gitee.co
 
 	After deploy sample succeed, execute command:
 	
-	bash run_presenterserv.sh
+	bash run_presenterserv.sh &
 
 	**figure 2**  Start Presenter Server<a name="zh-cn_topic_0167071573_fig184321447181018"></a>  
 	![figure 2](doc/source/img/PresenterServerStartup.png "Presenter Server进程启动")  
