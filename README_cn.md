@@ -18,7 +18,7 @@
 
    	将https://gitee.com/Atlas200DK/sample-facedetection-python.git   
 
-   	仓中的代码下载至所在Ubuntu服务器（UIHost）的任意目录，例如代码存放路径为：$HOME/ascend/sample-	facedetection-python。
+   	仓中的代码下载至所在Ubuntu服务器（UIHost）的任意目录，例如代码存放路径为：$HOME/ascend/sample-facedetection-python。
 
 -   安装环境依赖
 
