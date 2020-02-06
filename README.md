@@ -15,7 +15,7 @@ Before using an open source application, ensure that:
 ## Enviroment Configuration
 -  Get Code  
 
-Download all the code in the sample-facedetection repository at https://gitee.com/Atlas200DK/sample-facedetection-python.git  to any directory on Ubuntu PC Server, for example,  $HOME/sample-facedetection/.
+Download all the code in the sample-facedetection repository at https://github.com/Atlas200DKTest/sample-facedetection-python.git  to any directory on Ubuntu PC Server, for example,  $HOME/sample-facedetection/.
 
 -  Install dependency
 
