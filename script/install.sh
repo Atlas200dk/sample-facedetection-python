@@ -4,7 +4,7 @@
 function isrootuser()
 {
 username=$(env | grep USER)
-if [ "${username#*=}" = "root" ] ;then
+if [ "${USERNAME#*=}" = "root" ] ;then
 return 0 
 fi
 return 1
