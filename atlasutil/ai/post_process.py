@@ -31,10 +31,10 @@ def SSDPostProcess(inference_result, image_resolution, confidence_threshold, lab
         detection_item = ObjectDetectionResult()
         detection_item.attr = int(item[1])
         detection_item.confidence = item[2]
-        detection_item.lt.x = int(item[3] * image_resolution[1])
-        detection_item.lt.y = int(item[4] * image_resolution[0])
-        detection_item.rb.x = int(item[5] * image_resolution[1])
-        detection_item.rb.y = int(item[6] * image_resolution[0])
+        detection_item.lt.x = int(max(min(item[3], 1), 0) * image_resolution[1])
+        detection_item.lt.y = int(max(min(item[4], 1), 0) * image_resolution[0])
+        detection_item.rb.x = int(max(min(item[5], 1), 0) * image_resolution[1])
+        detection_item.rb.y = int(max(min(item[6], 1), 0) * image_resolution[0])
         if labels == []:
             detection_item.result_text = str(detection_item.attr) + " " + str(round(detection_item.confidence*100,2)) + "%"
         else:
